@@ -26,7 +26,7 @@ import WalletConnect from "./components/blockchain/WalletConnect";
 import TransactionNotification from "./components/blockchain/TransactionNotification";
 
 import "./styles/App.css";
-import "./styles/SharedComponents.css";
+// import "./styles/SharedComponents.css";
 
 const socket = io("http://localhost:4000", { transports: ["websocket"] });
 
@@ -70,162 +70,122 @@ export default function App() {
   const [simulateMode, setSimulateMode] = useState(false);
   const [hostRoomInfo, setHostRoomInfo] = useState(null);
 
-  // ADD: Blockchain state
   const { signer, account, isConnected } = useWeb3();
   const { contract, isReady } = useContract(signer);
 
-useEffect(() => {
-  console.log('🎮 Current stage:', stage);
-  console.log('🏠 Room info:', roomInfo);
-}, [stage, roomInfo]);
-
   useEffect(() => {
-  if (contract) {
-    console.log('✅ Contract object exists:', contract);
-    console.log('Contract address:', contract.target || contract.address);
-    
-    // Try to call a simple function
-    contract.weeklyTopic().then(topic => {
-      console.log('📋 Weekly topic from contract:', topic);
-    }).catch(err => {
-      console.error('❌ Failed to read from contract:', err);
-    });
-  } else {
-    console.log('❌ No contract object');
-  }
-}, [contract]);
-
-// Add this temporarily in App.jsx
-const setWeeklyTopic = async () => {
-  if (contract && account) {
-    try {
-      console.log('Setting weekly topic...');
-      const tx = await contract.setWeeklyTopic("Is a hot dog a sandwich?");
-      await tx.wait();
-      console.log('✅ Topic set!');
-    } catch (err) {
-      console.error('Failed to set topic:', err);
-    }
-  }
-};
-
-  // TEMPORARY DEBUG - Remove after fixing
-useEffect(() => {
-  console.log('🐛 DEBUG - Current state:', {
-    hasContract: !!contract,
-    contractAddress: contract?.target || contract?.address,
-    hasAccount: !!account,
-    account: account,
-    hasRoomInfo: !!roomInfo,
-    roomId: roomInfo?.id,
-    hasCurrentPlayer: !!currentPlayer,
-    playerName: currentPlayer?.name,
-    isReady: contract?.target ? 'ready' : 'not ready'
-  });
-}, [contract, account, roomInfo, currentPlayer]);
-
-// Join blockchain room when player joins via Socket.IO
-useEffect(() => {
-  const joinBlockchainRoom = async () => {
-    if (!contract || !account || !roomInfo || !currentPlayer) return;
-
-    try {
-      console.log(`🔍 Checking blockchain room ${roomInfo.id}...`);
-      
-      // Check if room exists
-      const exists = await contract.roomExists(roomInfo.id);
-      if (!exists) {
-        console.log("⚠️ Room doesn't exist on blockchain yet. Will join when host creates it.");
-        return;
-      }
-
-      // Check if already in room
-      const players = await contract.getRoomPlayers(roomInfo.id);
-      const alreadyInRoom = players.some(
-        p => p.toLowerCase() === account.toLowerCase()
-      );
-
-      if (alreadyInRoom) {
-        console.log(`✅ Already in blockchain room ${roomInfo.id}`);
-        return;
-      }
-
-      // Join the room
-      console.log(`🚪 Joining blockchain room ${roomInfo.id}...`);
-      const tx = await contract.joinGameRoom(roomInfo.id);
-      await tx.wait();
-      console.log(`✅ Joined blockchain room!`);
-
-    } catch (err) {
-      console.error("Failed to join blockchain room:", err);
-    }
-  };
-
-  // Delay to ensure room is created first
-  const timer = setTimeout(joinBlockchainRoom, 2000);
-  return () => clearTimeout(timer);
-}, [contract, account, roomInfo, currentPlayer]);
+    console.log("🎮 Current stage:", stage);
+    console.log("🏠 Room info:", roomInfo);
+  }, [stage, roomInfo]);
 
   // Join blockchain room when player joins via Socket.IO
-useEffect(() => {
-  const joinBlockchainRoom = async () => {
-    if (!contract || !account || !roomInfo || !currentPlayer) {
-      console.log('⚠️ Missing requirements for blockchain room join');
-      return;
-    }
+  useEffect(() => {
+    const joinBlockchainRoom = async () => {
+      if (!contract || !account || !roomInfo || !currentPlayer) return;
 
-    try {
-      console.log(`🔍 Checking blockchain room ${roomInfo.id}...`);
-      
-      // Wait a bit to ensure room is created by host
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // Check if room exists
-      const exists = await contract.roomExists(roomInfo.id);
-      if (!exists) {
-        console.log("⚠️ Room doesn't exist on blockchain yet. Waiting for host to create it...");
-        
-        // Retry after delay
-        await new Promise(resolve => setTimeout(resolve, 3000));
-        const existsRetry = await contract.roomExists(roomInfo.id);
-        if (!existsRetry) {
-          console.log("⚠️ Room still doesn't exist. Host needs to start the game to create it.");
+      try {
+        console.log(`🔍 Checking blockchain room ${roomInfo.id}...`);
+
+        // Check if room exists
+        const exists = await contract.roomExists(roomInfo.id);
+        if (!exists) {
+          console.log(
+            "⚠️ Room doesn't exist on blockchain yet. Will join when host creates it."
+          );
           return;
         }
+
+        // Check if already in room
+        const players = await contract.getRoomPlayers(roomInfo.id);
+        const alreadyInRoom = players.some(
+          (p) => p.toLowerCase() === account.toLowerCase()
+        );
+
+        if (alreadyInRoom) {
+          console.log(`✅ Already in blockchain room ${roomInfo.id}`);
+          return;
+        }
+
+        // Join the room
+        console.log(`🚪 Joining blockchain room ${roomInfo.id}...`);
+        const tx = await contract.joinGameRoom(roomInfo.id);
+        await tx.wait();
+        console.log(`✅ Joined blockchain room!`);
+      } catch (err) {
+        console.error("Failed to join blockchain room:", err);
       }
+    };
 
-      console.log("✅ Room exists on blockchain");
+    // Delay to ensure room is created first
+    const timer = setTimeout(joinBlockchainRoom, 2000);
+    return () => clearTimeout(timer);
+  }, [contract, account, roomInfo, currentPlayer]);
 
-      // Check if already in room
-      const players = await contract.getRoomPlayers(roomInfo.id);
-      console.log("Current blockchain players:", players);
-      
-      const alreadyInRoom = players.some(
-        p => p.toLowerCase() === account.toLowerCase()
-      );
-
-      if (alreadyInRoom) {
-        console.log(`✅ Already in blockchain room ${roomInfo.id}`);
+  // Join blockchain room when player joins via Socket.IO
+  useEffect(() => {
+    const joinBlockchainRoom = async () => {
+      if (!contract || !account || !roomInfo || !currentPlayer) {
+        console.log("⚠️ Missing requirements for blockchain room join");
         return;
       }
 
-      // Join the room
-      console.log(`🚪 Joining blockchain room ${roomInfo.id}...`);
-      const tx = await contract.joinGameRoom(roomInfo.id);
-      console.log("⏳ Waiting for join transaction...");
-      await tx.wait();
-      console.log(`✅ Joined blockchain room!`);
+      try {
+        console.log(`🔍 Checking blockchain room ${roomInfo.id}...`);
 
-    } catch (err) {
-      console.error("❌ Failed to join blockchain room:", err);
-      console.log("Game will continue in Socket.IO-only mode for this player");
-    }
-  };
+        // Wait a bit to ensure room is created by host
+        await new Promise((resolve) => setTimeout(resolve, 2000));
 
-  // Run with delay to allow player setup to complete
-  const timer = setTimeout(joinBlockchainRoom, 3000);
-  return () => clearTimeout(timer);
-}, [contract, account, roomInfo, currentPlayer]);
+        // Check if room exists
+        const exists = await contract.roomExists(roomInfo.id);
+        if (!exists) {
+          console.log(
+            "⚠️ Room doesn't exist on blockchain yet. Waiting for host to create it..."
+          );
+
+          // Retry after delay
+          await new Promise((resolve) => setTimeout(resolve, 3000));
+          const existsRetry = await contract.roomExists(roomInfo.id);
+          if (!existsRetry) {
+            console.log(
+              "⚠️ Room still doesn't exist. Host needs to start the game to create it."
+            );
+            return;
+          }
+        }
+
+        console.log("✅ Room exists on blockchain");
+
+        // Check if already in room
+        const players = await contract.getRoomPlayers(roomInfo.id);
+        console.log("Current blockchain players:", players);
+
+        const alreadyInRoom = players.some(
+          (p) => p.toLowerCase() === account.toLowerCase()
+        );
+
+        if (alreadyInRoom) {
+          console.log(`✅ Already in blockchain room ${roomInfo.id}`);
+          return;
+        }
+
+        // Join the room
+        console.log(`🚪 Joining blockchain room ${roomInfo.id}...`);
+        const tx = await contract.joinGameRoom(roomInfo.id);
+        console.log("⏳ Waiting for join transaction...");
+        await tx.wait();
+        console.log(`✅ Joined blockchain room!`);
+      } catch (err) {
+        console.error("❌ Failed to join blockchain room:", err);
+        console.log(
+          "Game will continue in Socket.IO-only mode for this player"
+        );
+      }
+    };
+
+    // Run with delay to allow player setup to complete
+    const timer = setTimeout(joinBlockchainRoom, 3000);
+    return () => clearTimeout(timer);
+  }, [contract, account, roomInfo, currentPlayer]);
 
   useEffect(() => {
     const storedHostRoom = localStorage.getItem("hostRoomInfo");
@@ -332,7 +292,7 @@ useEffect(() => {
       // Dashboard handles the countdown display
     });
 
-    // 🎯 Game actually starts - move to Topic Reveal
+    // 🎯 Game starts - move to Topic Reveal
     socket.on(
       "gameStarting",
       ({ topic: serverTopic, questionIndex, totalQuestions }) => {
@@ -352,7 +312,7 @@ useEffect(() => {
       setStage(GameStage.VALIDATOR);
     });
 
-    // 🎯 Validation complete - move to Community Vote
+    // 🎯 Validation complete - move to Voting Phase
     socket.on("validationComplete", ({ validatorScores: scores }) => {
       console.log("🤖 Validation complete, moving to voting");
       setValidatorScores(scores);
@@ -502,12 +462,12 @@ useEffect(() => {
     });
   };
 
-  // NEW: Handler for welcome screen
+  // Handler for welcome screen
   const handleWelcomeComplete = () => {
     setStage(GameStage.WALLET_CONNECT);
   };
 
-  // NEW: Handler for wallet connection
+  // Handler for wallet connection
   const handleWalletConnected = () => {
     setStage(GameStage.ROOM_SELECT);
   };
@@ -536,10 +496,6 @@ useEffect(() => {
       ? [currentPlayer, ...MOCK_PLAYERS.slice(1)]
       : players;
     setPlayers(updatedPlayers);
-
-    // Use topic from server (already set via socket event)
-    // setTopic is already called in the socket listener above
-
     setStage(GameStage.TOPIC_REVEAL);
   };
 
@@ -554,9 +510,6 @@ useEffect(() => {
 
   return (
     <div className="app-root">
-
-      {/* <button onClick={setWeeklyTopic}>Set Weekly Topic (Owner Only)</button> */}
-
       <Toaster
         position="top-right"
         toastOptions={{
@@ -572,12 +525,10 @@ useEffect(() => {
         }}
       />
 
-      {/* ADD: Transaction notifications */}
+      {/* Transaction notifications */}
       <TransactionNotification socket={socket} />
 
-      
-
-      {/* ADD: Wallet status in header */}
+      {/* Wallet status in header */}
       {stage !== GameStage.WELCOME &&
         stage !== GameStage.WALLET_CONNECT &&
         stage !== GameStage.ROOM_SELECT &&
