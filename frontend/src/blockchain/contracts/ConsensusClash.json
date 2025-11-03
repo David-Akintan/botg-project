@@ -1,0 +1,710 @@
+[
+  { "inputs": [], "stateMutability": "nonpayable", "type": "constructor" },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "string",
+        "name": "roomCode",
+        "type": "string"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "player",
+        "type": "address"
+      }
+    ],
+    "name": "ArgumentSubmitted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "string",
+        "name": "roomCode",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "winner",
+        "type": "address"
+      }
+    ],
+    "name": "GameCompleted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "string",
+        "name": "roomCode",
+        "type": "string"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "gameId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "topic",
+        "type": "string"
+      }
+    ],
+    "name": "GameCreated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "string",
+        "name": "roomCode",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "timestamp",
+        "type": "uint256"
+      }
+    ],
+    "name": "GameStarted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "string",
+        "name": "roomCode",
+        "type": "string"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "player",
+        "type": "address"
+      }
+    ],
+    "name": "PlayerJoined",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "player",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      }
+    ],
+    "name": "PlayerRegistered",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "string",
+        "name": "roomCode",
+        "type": "string"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "player",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "creativity",
+        "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "logic",
+        "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "persuasiveness",
+        "type": "uint8"
+      }
+    ],
+    "name": "ValidatorScoresSet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "string",
+        "name": "roomCode",
+        "type": "string"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "voter",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "votedFor",
+        "type": "address"
+      }
+    ],
+    "name": "VoteCast",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "topic",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "weekNumber",
+        "type": "uint256"
+      }
+    ],
+    "name": "WeeklyTopicSet",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "ARGUMENT_TIME_SECONDS",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "BASIS_POINTS",
+    "outputs": [{ "internalType": "uint16", "name": "", "type": "uint16" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "COMMUNITY_WEIGHT",
+    "outputs": [{ "internalType": "uint16", "name": "", "type": "uint16" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "MAX_ARGUMENT_LENGTH",
+    "outputs": [{ "internalType": "uint16", "name": "", "type": "uint16" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "MAX_PLAYERS",
+    "outputs": [{ "internalType": "uint8", "name": "", "type": "uint8" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "MIN_ARGUMENT_LENGTH",
+    "outputs": [{ "internalType": "uint16", "name": "", "type": "uint16" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "MIN_PLAYERS",
+    "outputs": [{ "internalType": "uint8", "name": "", "type": "uint8" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "VALIDATOR_WEIGHT",
+    "outputs": [{ "internalType": "uint16", "name": "", "type": "uint16" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "VOTE_TIME_SECONDS",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "activeRoomCodes",
+    "outputs": [{ "internalType": "string", "name": "", "type": "string" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "_roomCode", "type": "string" }
+    ],
+    "name": "calculateFinalScores",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "_roomCode", "type": "string" },
+      { "internalType": "address", "name": "_votedFor", "type": "address" }
+    ],
+    "name": "castVote",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "consensusReached",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "_roomCode", "type": "string" }
+    ],
+    "name": "createGameRoom",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "currentGameId",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "finalRankings",
+    "outputs": [
+      { "internalType": "address", "name": "playerAddress", "type": "address" },
+      { "internalType": "string", "name": "name", "type": "string" },
+      { "internalType": "uint16", "name": "validatorScore", "type": "uint16" },
+      { "internalType": "uint16", "name": "communityScore", "type": "uint16" },
+      { "internalType": "uint16", "name": "totalScore", "type": "uint16" },
+      { "internalType": "uint256", "name": "xp", "type": "uint256" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "string", "name": "", "type": "string" }],
+    "name": "gameRooms",
+    "outputs": [
+      { "internalType": "uint256", "name": "gameId", "type": "uint256" },
+      {
+        "internalType": "enum ConsensusClash.GameStage",
+        "name": "stage",
+        "type": "uint8"
+      },
+      { "internalType": "string", "name": "topic", "type": "string" },
+      { "internalType": "uint256", "name": "startTime", "type": "uint256" },
+      { "internalType": "bool", "name": "consensusReached", "type": "bool" },
+      { "internalType": "bool", "name": "exists", "type": "bool" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "gameStage",
+    "outputs": [
+      {
+        "internalType": "enum ConsensusClash.GameStage",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "gameStartTime",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "gameTopic",
+    "outputs": [{ "internalType": "string", "name": "", "type": "string" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getActiveRooms",
+    "outputs": [{ "internalType": "string[]", "name": "", "type": "string[]" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getCurrentWeek",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "_roomCode", "type": "string" }
+    ],
+    "name": "getFinalRankings",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "playerAddress",
+            "type": "address"
+          },
+          { "internalType": "string", "name": "name", "type": "string" },
+          {
+            "internalType": "uint16",
+            "name": "validatorScore",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "communityScore",
+            "type": "uint16"
+          },
+          { "internalType": "uint16", "name": "totalScore", "type": "uint16" },
+          { "internalType": "uint256", "name": "xp", "type": "uint256" }
+        ],
+        "internalType": "struct ConsensusClash.Ranking[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "_roomCode", "type": "string" }
+    ],
+    "name": "getGameState",
+    "outputs": [
+      { "internalType": "uint256", "name": "gameId", "type": "uint256" },
+      {
+        "internalType": "enum ConsensusClash.GameStage",
+        "name": "stage",
+        "type": "uint8"
+      },
+      { "internalType": "string", "name": "topic", "type": "string" },
+      { "internalType": "uint256", "name": "playerCount", "type": "uint256" },
+      {
+        "internalType": "uint256",
+        "name": "argumentsSubmitted",
+        "type": "uint256"
+      },
+      { "internalType": "uint256", "name": "votesCast", "type": "uint256" },
+      { "internalType": "bool", "name": "consensus", "type": "bool" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "_player", "type": "address" }
+    ],
+    "name": "getPlayerInfo",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "string", "name": "name", "type": "string" },
+          { "internalType": "string", "name": "avatar", "type": "string" },
+          { "internalType": "uint256", "name": "totalXp", "type": "uint256" },
+          {
+            "internalType": "uint256",
+            "name": "gamesPlayed",
+            "type": "uint256"
+          },
+          { "internalType": "uint256", "name": "wins", "type": "uint256" },
+          { "internalType": "bool", "name": "registered", "type": "bool" }
+        ],
+        "internalType": "struct ConsensusClash.Player",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "_roomCode", "type": "string" }
+    ],
+    "name": "getRoomPlayers",
+    "outputs": [
+      { "internalType": "address[]", "name": "", "type": "address[]" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "_limit", "type": "uint256" }
+    ],
+    "name": "getWeeklyLeaderboard",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "playerAddress",
+            "type": "address"
+          },
+          { "internalType": "string", "name": "name", "type": "string" },
+          {
+            "internalType": "uint16",
+            "name": "validatorScore",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "communityScore",
+            "type": "uint16"
+          },
+          { "internalType": "uint16", "name": "totalScore", "type": "uint16" },
+          { "internalType": "uint256", "name": "xp", "type": "uint256" }
+        ],
+        "internalType": "struct ConsensusClash.Ranking[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "_roomCode", "type": "string" }
+    ],
+    "name": "joinGameRoom",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "name": "playerArguments",
+    "outputs": [{ "internalType": "string", "name": "", "type": "string" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "name": "playerVotes",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "_name", "type": "string" },
+      { "internalType": "string", "name": "_avatar", "type": "string" }
+    ],
+    "name": "registerPlayer",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "name": "registeredPlayers",
+    "outputs": [
+      { "internalType": "string", "name": "name", "type": "string" },
+      { "internalType": "string", "name": "avatar", "type": "string" },
+      { "internalType": "uint256", "name": "totalXp", "type": "uint256" },
+      { "internalType": "uint256", "name": "gamesPlayed", "type": "uint256" },
+      { "internalType": "uint256", "name": "wins", "type": "uint256" },
+      { "internalType": "bool", "name": "registered", "type": "bool" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "_roomCode", "type": "string" }
+    ],
+    "name": "resetGame",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "_roomCode", "type": "string" }
+    ],
+    "name": "roomExists",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "", "type": "string" },
+      { "internalType": "address", "name": "", "type": "address" }
+    ],
+    "name": "roomPlayerArguments",
+    "outputs": [{ "internalType": "string", "name": "", "type": "string" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "", "type": "string" },
+      { "internalType": "address", "name": "", "type": "address" }
+    ],
+    "name": "roomPlayerVotes",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "roomPlayers",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "", "type": "string" },
+      { "internalType": "address", "name": "", "type": "address" }
+    ],
+    "name": "roomValidatorScores",
+    "outputs": [
+      { "internalType": "uint8", "name": "creativity", "type": "uint8" },
+      { "internalType": "uint8", "name": "logic", "type": "uint8" },
+      { "internalType": "uint8", "name": "persuasiveness", "type": "uint8" },
+      { "internalType": "bool", "name": "scored", "type": "bool" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "_roomCode", "type": "string" },
+      { "internalType": "address", "name": "_player", "type": "address" },
+      { "internalType": "uint8", "name": "_creativity", "type": "uint8" },
+      { "internalType": "uint8", "name": "_logic", "type": "uint8" },
+      { "internalType": "uint8", "name": "_persuasiveness", "type": "uint8" }
+    ],
+    "name": "setValidatorScores",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "_topic", "type": "string" }
+    ],
+    "name": "setWeeklyTopic",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "_roomCode", "type": "string" }
+    ],
+    "name": "startGame",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "_roomCode", "type": "string" },
+      { "internalType": "string", "name": "_argument", "type": "string" }
+    ],
+    "name": "submitArgument",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "topicWeekNumber",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalGames",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "name": "validatorScores",
+    "outputs": [
+      { "internalType": "uint8", "name": "creativity", "type": "uint8" },
+      { "internalType": "uint8", "name": "logic", "type": "uint8" },
+      { "internalType": "uint8", "name": "persuasiveness", "type": "uint8" },
+      { "internalType": "bool", "name": "scored", "type": "bool" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "weeklyTopic",
+    "outputs": [{ "internalType": "string", "name": "", "type": "string" }],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

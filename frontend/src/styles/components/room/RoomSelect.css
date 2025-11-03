@@ -1,0 +1,364 @@
+.room-select-container {
+  min-height: 100vh;
+  background: var(--primary-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-lg);
+  position: relative;
+}
+
+.room-select-content {
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-2xl);
+  box-shadow: var(--shadow-xl);
+  width: 100%;
+  max-width: 600px;
+}
+
+.room-select-content h2 {
+  text-align: center;
+  color: var(--gray-800);
+  margin-bottom: var(--spacing-xl);
+}
+
+/* Back Button */
+.back-to-welcome-btn {
+  position: absolute;
+  top: var(--spacing-lg);
+  left: var(--spacing-lg);
+  background: transparent;
+  border: 2px solid var(--white);
+  color: var(--white);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-weight: 600;
+  transition: all var(--transition-base);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.back-to-welcome-btn:hover {
+  background: var(--white);
+  color: var(--primary-color);
+}
+
+/* Host Rejoin Section */
+.host-rejoin-section {
+  margin-bottom: var(--spacing-xl);
+}
+
+.rejoin-banner {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  border: 2px solid var(--warning-color);
+}
+
+.rejoin-icon {
+  font-size: 32px;
+  flex-shrink: 0;
+}
+
+.rejoin-content {
+  flex: 1;
+}
+
+.rejoin-content h3 {
+  margin: 0 0 var(--spacing-xs) 0;
+  font-size: 18px;
+  color: var(--gray-800);
+}
+
+.rejoin-content p {
+  margin: 0;
+  color: var(--gray-700);
+  font-size: 14px;
+}
+
+.rejoin-btn {
+  background: var(--warning-color);
+  color: var(--white);
+  border: none;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  white-space: nowrap;
+}
+
+.rejoin-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.room-expired-notice {
+  background: var(--gray-100);
+  border: 2px solid var(--gray-300);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  text-align: center;
+}
+
+.room-expired-notice p {
+  color: var(--gray-600);
+  margin: 0;
+  font-size: 14px;
+}
+
+/* Room Toggle */
+.room-toggle {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-xl);
+  background: var(--gray-100);
+  padding: var(--spacing-xs);
+  border-radius: var(--radius-full);
+}
+
+.room-toggle button {
+  flex: 1;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--radius-full);
+  background: transparent;
+  border: none;
+  font-weight: 600;
+  color: var(--gray-600);
+  transition: all var(--transition-base);
+}
+
+.room-toggle button.active {
+  background: var(--white);
+  color: var(--primary-color);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Simulate Toggle */
+.simulate-toggle {
+  margin-bottom: var(--spacing-xl);
+  padding: var(--spacing-md);
+  background: var(--gray-50);
+  border-radius: var(--radius-md);
+  border: 2px solid var(--gray-200);
+}
+
+.simulate-toggle label {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--gray-700);
+}
+
+.simulate-toggle input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+/* Input Section */
+.input-section {
+  margin-bottom: var(--spacing-xl);
+}
+
+.input-section label {
+  display: block;
+  font-weight: 600;
+  color: var(--gray-700);
+  margin-bottom: var(--spacing-sm);
+}
+
+.input-section input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid var(--gray-300);
+  border-radius: var(--radius-md);
+  font-size: 16px;
+  transition: all var(--transition-base);
+  text-transform: uppercase;
+}
+
+.input-section input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.action-btn {
+  width: 100%;
+  background: var(--primary-gradient);
+  color: var(--white);
+  border: none;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  margin-top: var(--spacing-md);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
+
+.action-btn:active {
+  transform: translateY(0);
+}
+
+/* Create Room Section */
+.create-room-section {
+  text-align: center;
+}
+
+.create-room-section p {
+  color: var(--gray-600);
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Available Rooms */
+.available-rooms {
+  margin-top: var(--spacing-xl);
+  padding-top: var(--spacing-xl);
+  border-top: 2px solid var(--gray-200);
+}
+
+.available-rooms h3 {
+  color: var(--gray-800);
+  margin-bottom: var(--spacing-lg);
+  font-size: 20px;
+}
+
+.available-rooms ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.available-rooms li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-md);
+  background: var(--gray-50);
+  border: 2px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-sm);
+  transition: all var(--transition-base);
+}
+
+.available-rooms li:hover {
+  border-color: var(--primary-color);
+  background: var(--white);
+}
+
+.room-info {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex: 1;
+}
+
+.room-info strong {
+  color: var(--gray-800);
+  font-size: 16px;
+}
+
+.your-room-tag {
+  background: var(--warning-color);
+  color: var(--white);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.room-players {
+  color: var(--gray-600);
+  font-size: 14px;
+  margin: 0 var(--spacing-md);
+}
+
+.available-rooms li button {
+  background: var(--primary-color);
+  color: var(--white);
+  border: none;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.available-rooms li button:hover:not(:disabled) {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+.available-rooms li button:disabled {
+  background: var(--gray-400);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 640px) {
+  .room-select-content {
+    padding: var(--spacing-lg);
+  }
+
+  .back-to-welcome-btn {
+    position: static;
+    margin-bottom: var(--spacing-lg);
+    width: 100%;
+    justify-content: center;
+  }
+
+  .rejoin-banner {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .rejoin-btn {
+    width: 100%;
+  }
+
+  .available-rooms li {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    text-align: center;
+  }
+
+  .room-info {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .room-players {
+    margin: 0;
+  }
+
+  .available-rooms li button {
+    width: 100%;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 768px) {
+  .room-select-content {
+    padding: var(--spacing-xl);
+  }
+}

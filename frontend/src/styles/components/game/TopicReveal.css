@@ -1,0 +1,100 @@
+.topic-screen {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--primary-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-lg);
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.topic-card {
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-2xl);
+  box-shadow: var(--shadow-xl);
+  text-align: center;
+  max-width: 600px;
+  width: 100%;
+  box-sizing: border-box;
+  animation: scaleIn 0.5s ease;
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.topic-emoji {
+  font-size: 80px;
+  margin-bottom: var(--spacing-lg);
+  animation: bounce 1s ease infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.topic-title {
+  font-size: 32px;
+  color: var(--gray-900);
+  margin-bottom: var(--spacing-xl);
+}
+
+.topic-box {
+  background: var(--gray-50);
+  border: 3px solid var(--primary-color);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--gray-800);
+  line-height: 1.4;
+  margin-bottom: var(--spacing-lg);
+}
+
+.topic-sub {
+  color: var(--gray-600);
+  font-size: 16px;
+  margin: 0;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 640px) {
+  .topic-card {
+    padding: var(--spacing-lg);
+  }
+
+  .topic-emoji {
+    font-size: 60px;
+  }
+
+  .topic-title {
+    font-size: 24px;
+  }
+
+  .topic-box {
+    font-size: 18px;
+    padding: var(--spacing-lg);
+  }
+
+  .topic-sub {
+    font-size: 14px;
+  }
+}

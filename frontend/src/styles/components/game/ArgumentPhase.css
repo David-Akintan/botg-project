@@ -1,0 +1,256 @@
+.argument-screen {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--primary-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-lg);
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.argument-card {
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-2xl);
+  box-shadow: var(--shadow-xl);
+  max-width: 800px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.argument-header {
+  margin-bottom: var(--spacing-xl);
+}
+
+.argument-header h3 {
+  color: var(--gray-700);
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: var(--spacing-sm);
+}
+
+.topic-inline {
+  background: var(--gray-50);
+  border: 2px solid var(--primary-color);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--gray-800);
+  margin-bottom: var(--spacing-lg);
+}
+
+.meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+}
+
+.meta-row span {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  color: var(--gray-600);
+  font-weight: 600;
+}
+
+/* Textarea */
+.argument-textarea {
+  width: 100%;
+  min-height: 200px;
+  padding: var(--spacing-md);
+  border: 2px solid var(--gray-300);
+  border-radius: var(--radius-md);
+  font-size: 16px;
+  line-height: 1.6;
+  resize: vertical;
+  transition: all var(--transition-base);
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.argument-textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.argument-textarea::placeholder {
+  color: var(--gray-400);
+}
+
+/* Footer */
+.argument-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+}
+
+.char-count {
+  color: var(--gray-500);
+  font-size: 14px;
+}
+
+.submit-arg-btn {
+  background: var(--primary-gradient);
+  color: var(--white);
+  border: none;
+  padding: 12px 32px;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.submit-arg-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
+
+.submit-arg-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Tip Box */
+.tip-box {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border: 2px solid var(--warning-color);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+  color: var(--gray-800);
+}
+
+.tip-box strong {
+  color: var(--gray-900);
+}
+
+/* Waiting Section */
+.waiting-section {
+  margin-top: var(--spacing-lg);
+}
+
+.submitted-message {
+  text-align: center;
+  padding: var(--spacing-xl);
+  background: var(--gray-50);
+  border-radius: var(--radius-lg);
+}
+
+.check-icon {
+  font-size: 64px;
+  margin-bottom: var(--spacing-md);
+  animation: checkPop 0.5s ease;
+}
+
+@keyframes checkPop {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.submitted-message h3 {
+  color: var(--gray-900);
+  margin-bottom: var(--spacing-sm);
+}
+
+.submitted-message p {
+  color: var(--gray-600);
+  margin-bottom: var(--spacing-lg);
+}
+
+.submission-progress {
+  max-width: 400px;
+  margin: 0 auto var(--spacing-lg);
+}
+
+.progress-text {
+  font-weight: 600;
+  color: var(--gray-700);
+  margin-bottom: var(--spacing-sm);
+  font-size: 14px;
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: 8px;
+  background: var(--gray-200);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: var(--primary-gradient);
+  transition: width 0.3s ease;
+}
+
+.your-argument-preview {
+  background: var(--white);
+  border: 2px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  text-align: left;
+  margin-top: var(--spacing-lg);
+}
+
+.your-argument-preview strong {
+  display: block;
+  color: var(--gray-800);
+  margin-bottom: var(--spacing-sm);
+}
+
+.your-argument-preview p {
+  color: var(--gray-700);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 640px) {
+  .argument-card {
+    padding: var(--spacing-lg);
+  }
+
+  .topic-inline {
+    font-size: 16px;
+  }
+
+  .meta-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .argument-textarea {
+    min-height: 150px;
+    font-size: 14px;
+  }
+
+  .argument-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .submit-arg-btn {
+    width: 100%;
+  }
+
+  .check-icon {
+    font-size: 48px;
+  }
+}

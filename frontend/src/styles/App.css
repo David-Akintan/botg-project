@@ -1,0 +1,587 @@
+/* Base Styles */
+@import './base/variables.css';
+@import './base/reset.css';
+@import './base/typography.css';
+@import './base/utilities.css';
+
+/* Component Styles - Common */
+/* @import './components/common/Button.css';
+@import './components/common/Timer.css';
+@import './components/common/ProgressBar.css'; */
+
+/* Component Styles - Room */
+@import './components/room/Dashboard.css';
+@import './components/room/Lobby.css';
+@import './components/room/PlayerSetup.css';
+@import './components/room/RoomSelect.css';
+
+/* Component Styles - Game */
+@import './components/game/ArgumentPhase.css';
+@import './components/game/CommunityVote.css';
+@import './components/game/ConsensusPhase.css';
+@import './components/game/ConsolidatedResults.css';
+@import './components/game/Leaderboard.css';
+@import './components/game/TopicReveal.css';
+@import './components/game/ValidatorPhase.css';
+
+/* Component Styles - Layout */
+@import './components/layout/Welcome.css';
+
+/* ============================================
+   HARD RESET - Ensure no layout issues
+   ============================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  color: #1f2937;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #f9fafb;
+  /* DO NOT ADD: display: flex or place-items: center */
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ============================================
+   GLOBAL VARIABLES
+   ============================================ */
+
+:root {
+  /* Colors */
+  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --primary-color: #667eea;
+  --primary-dark: #764ba2;
+  --secondary-color: #f59e0b;
+  --success-color: #10b981;
+  --danger-color: #ef4444;
+  --warning-color: #f59e0b;
+  
+  /* Neutrals */
+  --white: #ffffff;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+  
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.15);
+  --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.3);
+  
+  /* Typography */
+  --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  
+  /* Container Widths */
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+}
+
+/* ============================================
+   BASE TYPOGRAPHY
+   ============================================ */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--gray-900);
+  margin: 0;
+}
+
+h1 { font-size: clamp(28px, 5vw, 36px); }
+h2 { font-size: clamp(24px, 4vw, 30px); }
+h3 { font-size: clamp(20px, 3vw, 24px); }
+
+p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+input, textarea, select {
+  font-family: inherit;
+  max-width: 100%;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ============================================
+   APP ROOT - CRITICAL FIX
+   ============================================ */
+
+.app-root {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden; /* Prevents horizontal scroll */
+  position: relative;
+}
+
+/* ============================================
+   SCREEN WRAPPER - USED BY ALL SCREENS
+   ============================================ */
+
+.screen-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-gradient);
+  padding: var(--spacing-lg);
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+/* ============================================
+   CONTAINER & CARDS
+   ============================================ */
+
+.container {
+  width: 100%;
+  max-width: var(--container-lg);
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+  box-sizing: border-box;
+}
+
+.card {
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-2xl);
+  box-shadow: var(--shadow-xl);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.card-sm {
+  max-width: var(--container-sm);
+}
+
+.card-md {
+  max-width: var(--container-md);
+}
+
+.card-lg {
+  max-width: var(--container-lg);
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  transition: all var(--transition-base);
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+.btn-primary {
+  background: var(--primary-gradient);
+  color: var(--white);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background: var(--gray-100);
+  color: var(--gray-800);
+  border: 2px solid var(--gray-300);
+}
+
+.btn-secondary:hover {
+  background: var(--gray-200);
+  border-color: var(--gray-400);
+}
+
+.btn-success {
+  background: var(--success-color);
+  color: var(--white);
+}
+
+.btn-danger {
+  background: var(--danger-color);
+  color: var(--white);
+}
+
+.btn-sm {
+  padding: 8px 16px;
+  font-size: 14px;
+}
+
+.btn-lg {
+  padding: 16px 32px;
+  font-size: 18px;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* ============================================
+   INPUT FIELDS
+   ============================================ */
+
+.input-group {
+  margin-bottom: var(--spacing-lg);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.input-label {
+  display: block;
+  font-weight: 600;
+  color: var(--gray-700);
+  margin-bottom: var(--spacing-sm);
+  font-size: 14px;
+}
+
+.input-field {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid var(--gray-300);
+  border-radius: var(--radius-md);
+  font-size: 16px;
+  transition: all var(--transition-base);
+  background: var(--white);
+  box-sizing: border-box;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.textarea-field {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid var(--gray-300);
+  border-radius: var(--radius-md);
+  font-size: 16px;
+  resize: vertical;
+  min-height: 120px;
+  transition: all var(--transition-base);
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.textarea-field:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* ============================================
+   PROGRESS BAR
+   ============================================ */
+
+.progress-container {
+  width: 100%;
+  height: 8px;
+  background: var(--gray-200);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--primary-gradient);
+  transition: width var(--transition-base);
+  max-width: 100%;
+}
+
+/* ============================================
+   BADGE
+   ============================================ */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.badge-primary {
+  background: var(--primary-color);
+  color: var(--white);
+}
+
+.badge-success {
+  background: var(--success-color);
+  color: var(--white);
+}
+
+.badge-warning {
+  background: var(--warning-color);
+  color: var(--white);
+}
+
+/* ============================================
+   TIMER DISPLAY
+   ============================================ */
+
+.timer-display {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: 8px 16px;
+  background: var(--gray-900);
+  color: var(--white);
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.timer-display.warning {
+  background: var(--danger-color);
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* ============================================
+   AVATAR
+   ============================================ */
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  border-radius: 50%;
+  background: var(--gray-100);
+  flex-shrink: 0;
+}
+
+.avatar-sm {
+  width: 32px;
+  height: 32px;
+  font-size: 20px;
+}
+
+.avatar-lg {
+  width: 64px;
+  height: 64px;
+  font-size: 36px;
+}
+
+.avatar-xl {
+  width: 96px;
+  height: 96px;
+  font-size: 48px;
+}
+
+/* ============================================
+   QUESTION PROGRESS
+   ============================================ */
+
+.question-progress {
+  background: var(--primary-gradient);
+  color: var(--white);
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  font-size: 14px;
+  font-weight: 600;
+  display: inline-block;
+  margin-bottom: var(--spacing-md);
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+/* ============================================
+   LOADING SPINNER
+   ============================================ */
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid var(--gray-200);
+  border-top-color: var(--primary-color);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto;
+}
+
+.app-header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding: var(--spacing-lg);
+  z-index: 1000;
+}
+
+/* Blockchain Badge */
+.blockchain-badge {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 14px;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Blockchain Pending State */
+.blockchain-pending {
+  text-align: center;
+  padding: var(--spacing-2xl);
+  background: var(--gray-50);
+  border-radius: var(--radius-lg);
+  margin-top: var(--spacing-lg);
+}
+
+.blockchain-pending .spinner {
+  margin: 0 auto var(--spacing-lg);
+}
+
+.blockchain-pending h3 {
+  color: var(--gray-900);
+  margin-bottom: var(--spacing-sm);
+}
+
+.blockchain-pending p {
+  color: var(--gray-600);
+}
+
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ============================================
+   RESPONSIVE UTILITIES
+   ============================================ */
+
+@media (max-width: 640px) {
+  .card {
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+  }
+  
+  .screen-wrapper {
+    padding: var(--spacing-md);
+  }
+  
+  .btn {
+    width: 100%;
+  }
+}
+
+/* Hide on mobile */
+.hide-mobile {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .hide-mobile {
+    display: block;
+  }
+}
+
+/* Show only on mobile */
+.show-mobile {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .show-mobile {
+    display: none;
+  }
+}

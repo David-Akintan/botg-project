@@ -1,0 +1,218 @@
+.leaderboard-root {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--primary-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-lg);
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.leaderboard-card {
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-2xl);
+  box-shadow: var(--shadow-xl);
+  max-width: 700px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.leaderboard-card h2 {
+  text-align: center;
+  color: var(--gray-900);
+  margin-bottom: var(--spacing-xl);
+  font-size: 32px;
+}
+
+/* Empty State */
+.empty {
+  text-align: center;
+  color: var(--gray-500);
+  padding: var(--spacing-2xl);
+  font-size: 16px;
+}
+
+/* Leaderboard Table */
+.leaderboard-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 var(--spacing-sm);
+  margin-bottom: var(--spacing-xl);
+}
+
+.leaderboard-table thead th {
+  text-align: left;
+  padding: var(--spacing-md);
+  color: var(--gray-600);
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid var(--gray-200);
+}
+
+.leaderboard-table tbody tr {
+  background: var(--gray-50);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-base);
+}
+
+.leaderboard-table tbody tr:hover {
+  background: var(--white);
+  transform: translateX(5px);
+  box-shadow: var(--shadow-sm);
+}
+
+.leaderboard-table tbody tr.top {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+}
+
+.leaderboard-table tbody tr.top:hover {
+  background: linear-gradient(135deg, #fde68a 0%, #fcd34d 100%);
+}
+
+.leaderboard-table tbody td {
+  padding: var(--spacing-md);
+  border-top: 2px solid transparent;
+  border-bottom: 2px solid transparent;
+}
+
+.leaderboard-table tbody tr:first-child td:first-child {
+  border-top-left-radius: var(--radius-md);
+}
+
+.leaderboard-table tbody tr:first-child td:last-child {
+  border-top-right-radius: var(--radius-md);
+}
+
+.leaderboard-table tbody tr:last-child td:first-child {
+  border-bottom-left-radius: var(--radius-md);
+}
+
+.leaderboard-table tbody tr:last-child td:last-child {
+  border-bottom-right-radius: var(--radius-md);
+}
+
+.rank-cell {
+  font-size: 24px;
+  font-weight: bold;
+  width: 60px;
+  text-align: center;
+}
+
+.player-cell {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  font-weight: 600;
+  color: var(--gray-900);
+}
+
+.avatar-sm {
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.xp-cell {
+  font-weight: 700;
+  color: var(--primary-color);
+  text-align: right;
+  font-size: 18px;
+  white-space: nowrap;
+}
+
+/* Actions */
+.leaderboard-actions {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-md);
+  padding-top: var(--spacing-lg);
+  border-top: 2px solid var(--gray-200);
+}
+
+.back-btn {
+  background: var(--gray-100);
+  color: var(--gray-800);
+  border: 2px solid var(--gray-300);
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.back-btn:hover {
+  background: var(--gray-200);
+  border-color: var(--gray-400);
+  transform: translateY(-2px);
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 640px) {
+  .leaderboard-card {
+    padding: var(--spacing-lg);
+  }
+
+  .leaderboard-card h2 {
+    font-size: 24px;
+  }
+
+  .leaderboard-table {
+    font-size: 14px;
+  }
+
+  .leaderboard-table thead {
+    display: none; /* Hide headers on mobile */
+  }
+
+  .leaderboard-table tbody tr {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+    border-radius: var(--radius-md);
+  }
+
+  .leaderboard-table tbody td {
+    padding: var(--spacing-xs) 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .leaderboard-table tbody td::before {
+    content: attr(data-label);
+    font-weight: 700;
+    color: var(--gray-600);
+    font-size: 12px;
+    text-transform: uppercase;
+  }
+
+  .rank-cell {
+    font-size: 20px;
+    width: auto;
+  }
+
+  .player-cell {
+    flex-direction: row;
+  }
+
+  .xp-cell {
+    font-size: 16px;
+  }
+
+  .back-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

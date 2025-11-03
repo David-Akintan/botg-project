@@ -1,0 +1,222 @@
+.consensus-screen {
+  min-height: 100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: linear-gradient(135deg, #2b0755, #1f3a8a);
+  padding: 24px;
+}
+
+.consensus-card {
+  width:100%;
+  max-width:640px;
+  background: rgba(0,0,0,0.36);
+  padding: 24px;
+  border-radius: 14px;
+  color: white;
+  text-align:center;
+  border: 1px solid rgba(139,92,246,0.12);
+}
+
+.consensus-icon {
+  display:inline-block;
+  margin-bottom:12px;
+}
+
+.weights {
+  margin-top: 18px;
+  display:flex;
+  justify-content:space-around;
+  color: rgba(255,255,255,0.9);
+}
+.consensus-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 2rem;
+}
+
+.consensus-card {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 700px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.consensus-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.consensus-header h2 {
+  margin: 1rem 0 0.5rem;
+  color: #1f2937;
+}
+
+.consensus-header p {
+  color: #6b7280;
+}
+
+.winner-highlight {
+  text-align: center;
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border: 3px solid #f59e0b;
+}
+
+.all-scores{
+  color: #1f2937;
+  background-color: #fef3c7;
+}
+
+.countdown-text {
+  color: #6b7280;
+  margin-top: 1rem;
+} 
+.winner-avatar {
+  font-size: 4rem;
+  margin-bottom: 0.5rem;
+}
+
+.winner-name {
+  font-size: 1.8rem;
+  color: #92400e;
+  margin: 0.5rem 0;
+}
+
+.winner-badge {
+  display: inline-block;
+  background: #f59e0b;
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: 20px;
+  font-weight: 700;
+  margin: 1rem 0;
+}
+
+.winner-stats {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-label {
+  font-size: 0.875rem;
+  color: #92400e;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #b45309;
+}
+
+.all-scores {
+  margin-top: 2rem;
+}
+
+.all-scores h4 {
+  text-align: center;
+  color: #374151;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.score-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  background: #f9fafb;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.score-row:hover {
+  background: #f3f4f6;
+  transform: translateX(4px);
+}
+
+.score-row.top {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border: 2px solid #f59e0b;
+}
+
+.rank {
+  font-size: 1.5rem;
+  min-width: 50px;
+  text-align: center;
+}
+
+.player-info-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+.avatar-small {
+  font-size: 1.5rem;
+}
+
+.name {
+  font-weight: 600;
+  color: #374151;
+}
+
+.scores-detail {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.score-item {
+  font-size: 0.9rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.score-item.xp {
+  color: #2563eb;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.countdown-footer {
+  text-align: center;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid #e5e7eb;
+}
+
+.countdown-footer p {
+  color: #6b7280;
+  font-weight: 600;
+}
+.question-progress {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  display: inline-block;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}

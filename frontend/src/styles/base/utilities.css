@@ -1,0 +1,47 @@
+/* Screen Wrapper */
+.screen-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-gradient);
+  padding: var(--spacing-lg);
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+/* Container */
+.container {
+  width: 100%;
+  max-width: var(--container-lg);
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+  box-sizing: border-box;
+}
+
+/* Cards */
+.card {
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-2xl);
+  box-shadow: var(--shadow-xl);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.card-sm { max-width: var(--container-sm); }
+.card-md { max-width: var(--container-md); }
+.card-lg { max-width: var(--container-lg); }
+
+/* Responsive Utilities */
+.hide-mobile { display: none; }
+@media (min-width: 768px) {
+  .hide-mobile { display: block; }
+}
+
+.show-mobile { display: block; }
+@media (min-width: 768px) {
+  .show-mobile { display: none; }
+}

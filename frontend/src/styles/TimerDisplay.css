@@ -1,0 +1,7 @@
+.timer-box {
+  background: rgba(255,255,255,0.04);
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-weight:700;
+  color: #fff;
+}
