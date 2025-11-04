@@ -38,7 +38,7 @@ export default function Header({ showWallet = true, onLogoClick }) {
           >
             <div className="logo-icon">⚔️</div>
             <div className="logo-text">
-              <h1>Consensus Clash</h1>
+              <h1>Battle of the Giants</h1>
               <span className="tagline">Debate. Vote. Conquer.</span>
             </div>
           </div>
@@ -46,12 +46,10 @@ export default function Header({ showWallet = true, onLogoClick }) {
 
         {showWallet && (
           <>
-            {/* Desktop Wallet */}
             <div className="header-right desktop-only">
               <WalletConnect />
             </div>
 
-            {/* Mobile Menu Button */}
             <button
               className="mobile-menu-btn mobile-only"
               onClick={toggleMobileMenu}
@@ -60,7 +58,6 @@ export default function Header({ showWallet = true, onLogoClick }) {
               {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
 
-            {/* Mobile Dropdown Menu */}
             {mobileMenuOpen && (
               <div className="mobile-menu-overlay" onClick={closeMobileMenu}>
                 <div
