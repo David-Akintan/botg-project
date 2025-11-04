@@ -10,9 +10,16 @@ app.use(cors());
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: [
+      "http://localhost:5173",
+      "http://localhost:3000",
+      "https://botg-project.vercel.app/", // frontend deployment url
+    ],
     methods: ["GET", "POST"],
+    credentials: true,
   },
+  transports: ["polling", "websocket"],
+  allowEIO3: true,
 });
 
 // --- Game Topics/Questions Pool ---
@@ -102,7 +109,7 @@ io.on("connection", (socket) => {
   // Send initial room list to new connection
   socket.emit("roomsUpdated", getRoomSummaries());
 
-  //Heartbeat to verify if host is still active 
+  //Heartbeat to verify if host is still active
   socket.on("hostHeartbeat", ({ roomCode }) => {
     const room = rooms[roomCode];
     if (room && room.hostId === socket.id) {
@@ -121,15 +128,17 @@ io.on("connection", (socket) => {
 
     const isHost = room.hostId === socket.id;
     const isOriginalHost = room.originalHostId === socket.id;
-    
-    socket.emit("hostStatusVerified", { 
-      isHost, 
+
+    socket.emit("hostStatusVerified", {
+      isHost,
       isOriginalHost,
       hostId: room.hostId,
-      originalHostId: room.originalHostId
+      originalHostId: room.originalHostId,
     });
-    
-    console.log(`🔍 Host status verified for ${socket.id} in ${roomCode}: isHost=${isHost}`);
+
+    console.log(
+      `🔍 Host status verified for ${socket.id} in ${roomCode}: isHost=${isHost}`
+    );
   });
 
   // Handle wallet registration
@@ -243,7 +252,9 @@ io.on("connection", (socket) => {
     const room = rooms[roomCode];
 
     // Check if player already in room
-    const existingPlayerIndex = room.players.findIndex((p) => p.id === socket.id);
+    const existingPlayerIndex = room.players.findIndex(
+      (p) => p.id === socket.id
+    );
     if (existingPlayerIndex !== -1) {
       console.log(`👤 Player ${socket.id} already in room ${roomCode}`);
       socket.join(roomCode);
@@ -251,17 +262,21 @@ io.on("connection", (socket) => {
       socket.emit("roomJoined", { room, isHost });
       return;
     }
-    
+
     // ADD: Check if player with same wallet address exists (duplicate prevention)
     const walletAddress = socketToWallet[socket.id];
     if (walletAddress) {
       const duplicatePlayer = room.players.find(
-        p => socketToWallet[p.id] === walletAddress && p.id !== socket.id
+        (p) => socketToWallet[p.id] === walletAddress && p.id !== socket.id
       );
-      
+
       if (duplicatePlayer) {
-        console.log(`⚠️ Player with wallet ${walletAddress} already in room. Removing old entry.`);
-        const dupIndex = room.players.findIndex(p => p.id === duplicatePlayer.id);
+        console.log(
+          `⚠️ Player with wallet ${walletAddress} already in room. Removing old entry.`
+        );
+        const dupIndex = room.players.findIndex(
+          (p) => p.id === duplicatePlayer.id
+        );
         room.players.splice(dupIndex, 1);
       }
     }

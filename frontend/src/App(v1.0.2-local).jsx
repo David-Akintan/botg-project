@@ -28,10 +28,7 @@ import TransactionNotification from "./components/blockchain/TransactionNotifica
 import "./styles/App.css";
 // import "./styles/SharedComponents.css";
 
-const socket = io(import.meta.env.VITE_API_URL || "http://localhost:4000", {
-  transports: ["websocket"],
-  withCredentials: true,
-});
+const socket = io("http://localhost:4000", { transports: ["websocket"] });
 
 const CustomToast = ({ message, actionLabel, onAction, type = "info" }) => {
   const bg =
