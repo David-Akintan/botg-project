@@ -1,6 +1,14 @@
 import React from "react";
 import "../../styles/components/layout/Welcome.css";
-import { MessageSquare, Users, Trophy, Zap, ArrowRight } from "lucide-react";
+import {
+  MessageSquare,
+  Users,
+  Trophy,
+  Zap,
+  ArrowRight,
+  Swords,
+  SettingsIcon,
+} from "lucide-react";
 
 export default function Welcome({ onGetStarted }) {
   return (
@@ -9,11 +17,11 @@ export default function Welcome({ onGetStarted }) {
         {/* Hero Section */}
         <div className="welcome-hero">
           <div className="logo-large">
-            <MessageSquare size={64} />
+            <Swords size={64} />
           </div>
           <h1 className="welcome-title">Battle of the Giants</h1>
           <p className="welcome-tagline">The Ultimate Debate Arena</p>
-          <p className="welcome-subtitle">Argue. Vote. Win. Powered by ....</p>
+          <p className="welcome-subtitle">Argue. Vote. Win. Powered by Base</p>
         </div>
 
         {/* How to Play Section */}
@@ -24,7 +32,10 @@ export default function Welcome({ onGetStarted }) {
               <div className="step-number">1</div>
               <div className="step-content">
                 <h3>Join or Create Room</h3>
-                <p>Create a new game room or join an existing one with a room code</p>
+                <p>
+                  Create a new game room or join an existing one with a room
+                  code
+                </p>
               </div>
             </div>
 
@@ -32,7 +43,10 @@ export default function Welcome({ onGetStarted }) {
               <div className="step-number">2</div>
               <div className="step-content">
                 <h3>Answer 5 Questions</h3>
-                <p>Write persuasive arguments for 5 different debate topics (1 min each)</p>
+                <p>
+                  Write persuasive arguments for 5 different debate topics (1
+                  min each)
+                </p>
               </div>
             </div>
 
@@ -40,7 +54,10 @@ export default function Welcome({ onGetStarted }) {
               <div className="step-number">3</div>
               <div className="step-content">
                 <h3>Vote on Best Arguments</h3>
-                <p>Review all answers and vote for the most convincing arguments (30s per question)</p>
+                <p>
+                  Review all answers and vote for the most convincing arguments
+                  (30s per question)
+                </p>
               </div>
             </div>
 
@@ -56,7 +73,10 @@ export default function Welcome({ onGetStarted }) {
 
         {/* Features Section */}
         <div className="features-section">
-          <h2>✨ Features</h2>
+          {/* <h2>✨ Features</h2> */}
+          <h2>
+            <SettingsIcon /> Features
+          </h2>
           <div className="features-list">
             <div className="feature-item">
               <Users size={24} />

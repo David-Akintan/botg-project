@@ -6,6 +6,7 @@ import io from "socket.io-client";
 import { GameStage } from "./utils/constants";
 import { MOCK_PLAYERS } from "./data";
 
+import Header from "./components/layout/Header";
 import RoomSelect from "./components/room/RoomSelect";
 import PlayerSetup from "./components/room/PlayerSetup";
 import Dashboard from "./components/room/Dashboard";
@@ -14,7 +15,6 @@ import TopicReveal from "./components/game/TopicReveal";
 import ArgumentPhase from "./components/game/ArgumentPhase";
 import ValidatorPhase from "./components/game/ValidatorPhase";
 import CommunityVote from "./components/game/CommunityVote";
-import ConsensusPhase from "./components/game/ConsensusPhase";
 import Leaderboard from "./components/game/Leaderboard";
 import ConsolidatedResults from "./components/game/ConsolidatedResults";
 import Welcome from "./components/layout/Welcome";
@@ -72,6 +72,7 @@ export default function App() {
   const [rooms, setRooms] = useState([]);
   const [simulateMode, setSimulateMode] = useState(false);
   const [hostRoomInfo, setHostRoomInfo] = useState(null);
+  const [showDisconnectPrompt, setShowDisconnectPrompt] = useState(false);
 
   const { signer, account, isConnected } = useWeb3();
   const { contract, isReady } = useContract(signer);
@@ -431,7 +432,7 @@ export default function App() {
     };
   }, [roomInfo, hostRoomInfo]);
 
-  // NEW: Protection against wallet disconnect
+  // Protection against wallet disconnect
   useEffect(() => {
     if (
       !isConnected &&
@@ -475,6 +476,25 @@ export default function App() {
     setStage(GameStage.ROOM_SELECT);
   };
 
+  const handleWalletDisconnect = () => {
+    setShowDisconnectPrompt(true);
+  };
+
+  const handleReconnect = () => {
+    setShowDisconnectPrompt(false);
+    setStage(GameStage.WALLET_CONNECT);
+  };
+
+  const handleGoToHomePage = () => {
+    setShowDisconnectPrompt(false);
+    if (roomInfo) {
+      setStage(GameStage.WELCOME);
+      window.location.reload();
+    } else {
+      setStage(GameStage.ROOM_SELECT);
+    }
+  };
+
   const handlePlayerSetupComplete = (playerData) => {
     console.log("✅ Player setup complete:", playerData);
     setCurrentPlayer(playerData);
@@ -494,7 +514,7 @@ export default function App() {
     setStage(GameStage.LEADERBOARD);
   };
 
-  const handleStartGame = (serverTopic) => {
+  const handleStartGame = () => {
     const updatedPlayers = simulateMode
       ? [currentPlayer, ...MOCK_PLAYERS.slice(1)]
       : players;
@@ -528,19 +548,37 @@ export default function App() {
         }}
       />
 
+      {stage !== GameStage.WELCOME && (
+        <Header
+          showWallet={stage !== GameStage.WALLET_CONNECT}
+          onDisconnect={handleWalletDisconnect}
+        />
+      )}
+
+      {/* Disconnect Prompt Modal */}
+      {showDisconnectPrompt && (
+        <div className="disconnect-modal-overlay">
+          <div className="disconnect-modal">
+            <h2>⚠️ Wallet Disconnected</h2>
+            <p>Your wallet has been disconnected. What would you like to do?</p>
+
+            <div className="disconnect-actions">
+              <button className="btn reconnect-btn" onClick={handleReconnect}>
+                🦊 Reconnect Wallet
+              </button>
+              <button
+                className="btn dashboard-btn"
+                onClick={() => window.location.reload()}
+              >
+                🏠 Go to Home
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Transaction notifications */}
       <TransactionNotification socket={socket} />
-
-      {/* Wallet status in header */}
-      {stage !== GameStage.WELCOME &&
-        stage !== GameStage.WALLET_CONNECT &&
-        stage !== GameStage.ROOM_SELECT &&
-        isConnected && (
-          <div className="app-header">
-            <WalletConnect />
-            {isReady && <span className="blockchain-badge">⛓️ On-Chain</span>}
-          </div>
-        )}
 
       {stage === GameStage.WELCOME && (
         <Welcome onGetStarted={handleWelcomeComplete} />

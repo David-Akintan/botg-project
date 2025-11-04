@@ -1,8 +1,8 @@
 /* Base Styles */
-@import './base/variables.css';
-@import './base/reset.css';
-@import './base/typography.css';
-@import './base/utilities.css';
+@import "./base/variables.css";
+@import "./base/reset.css";
+@import "./base/typography.css";
+@import "./base/utilities.css";
 
 /* Component Styles - Common */
 /* @import './components/common/Button.css';
@@ -10,26 +10,22 @@
 @import './components/common/ProgressBar.css'; */
 
 /* Component Styles - Room */
-@import './components/room/Dashboard.css';
-@import './components/room/Lobby.css';
-@import './components/room/PlayerSetup.css';
-@import './components/room/RoomSelect.css';
+@import "./components/room/Dashboard.css";
+@import "./components/room/Lobby.css";
+@import "./components/room/PlayerSetup.css";
+@import "./components/room/RoomSelect.css";
 
 /* Component Styles - Game */
-@import './components/game/ArgumentPhase.css';
-@import './components/game/CommunityVote.css';
-@import './components/game/ConsensusPhase.css';
-@import './components/game/ConsolidatedResults.css';
-@import './components/game/Leaderboard.css';
-@import './components/game/TopicReveal.css';
-@import './components/game/ValidatorPhase.css';
+@import "./components/game/ArgumentPhase.css";
+@import "./components/game/CommunityVote.css";
+@import "./components/game/ConsensusPhase.css";
+@import "./components/game/ConsolidatedResults.css";
+@import "./components/game/Leaderboard.css";
+@import "./components/game/TopicReveal.css";
+@import "./components/game/ValidatorPhase.css";
 
 /* Component Styles - Layout */
-@import './components/layout/Welcome.css';
-
-/* ============================================
-   HARD RESET - Ensure no layout issues
-   ============================================ */
+@import "./components/layout/Welcome.css";
 
 * {
   margin: 0;
@@ -50,7 +46,8 @@ body {
   width: 100%;
   min-height: 100vh;
   overflow-x: hidden;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
   color: #1f2937;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -78,7 +75,7 @@ body {
   --success-color: #10b981;
   --danger-color: #ef4444;
   --warning-color: #f59e0b;
-  
+
   /* Neutrals */
   --white: #ffffff;
   --gray-50: #f9fafb;
@@ -91,7 +88,7 @@ body {
   --gray-700: #374151;
   --gray-800: #1f2937;
   --gray-900: #111827;
-  
+
   /* Spacing */
   --spacing-xs: 4px;
   --spacing-sm: 8px;
@@ -99,29 +96,31 @@ body {
   --spacing-lg: 24px;
   --spacing-xl: 32px;
   --spacing-2xl: 48px;
-  
+
   /* Border Radius */
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
   --radius-xl: 20px;
   --radius-full: 9999px;
-  
+
   /* Shadows */
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.15);
   --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.3);
-  
+
   /* Typography */
-  --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-heading: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+
   /* Transitions */
   --transition-fast: 0.15s ease;
   --transition-base: 0.3s ease;
   --transition-slow: 0.5s ease;
-  
+
   /* Container Widths */
   --container-sm: 640px;
   --container-md: 768px;
@@ -129,11 +128,12 @@ body {
   --container-xl: 1280px;
 }
 
-/* ============================================
-   BASE TYPOGRAPHY
-   ============================================ */
-
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-heading);
   font-weight: 700;
   line-height: 1.2;
@@ -141,9 +141,15 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0;
 }
 
-h1 { font-size: clamp(28px, 5vw, 36px); }
-h2 { font-size: clamp(24px, 4vw, 30px); }
-h3 { font-size: clamp(20px, 3vw, 24px); }
+h1 {
+  font-size: clamp(28px, 5vw, 36px);
+}
+h2 {
+  font-size: clamp(24px, 4vw, 30px);
+}
+h3 {
+  font-size: clamp(20px, 3vw, 24px);
+}
 
 p {
   margin: 0;
@@ -157,7 +163,9 @@ button {
   outline: none;
 }
 
-input, textarea, select {
+input,
+textarea,
+select {
   font-family: inherit;
   max-width: 100%;
 }
@@ -168,20 +176,21 @@ img {
   display: block;
 }
 
-/* ============================================
-   APP ROOT - CRITICAL FIX
-   ============================================ */
-
 .app-root {
   width: 100%;
   min-height: 100vh;
-  overflow-x: hidden; /* Prevents horizontal scroll */
+  overflow-x: hidden;
   position: relative;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  display: flex;
+  flex-direction: column;
 }
 
-/* ============================================
-   SCREEN WRAPPER - USED BY ALL SCREENS
-   ============================================ */
+.app-root > div:not(.app-header) {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
 
 .screen-wrapper {
   width: 100%;
@@ -194,10 +203,6 @@ img {
   box-sizing: border-box;
   overflow-x: hidden;
 }
-
-/* ============================================
-   CONTAINER & CARDS
-   ============================================ */
 
 .container {
   width: 100%;
@@ -229,10 +234,124 @@ img {
   max-width: var(--container-lg);
 }
 
-/* ============================================
-   BUTTONS
-   ============================================ */
+/* Disconnect Modal */
+.disconnect-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 20px;
+}
 
+.disconnect-modal {
+  background: linear-gradient(135deg, #1e1e2e 0%, #2a2a3e 100%);
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.disconnect-modal h2 {
+  font-size: 28px;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+}
+
+.disconnect-modal p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 32px;
+  line-height: 1.6;
+}
+
+.disconnect-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.reconnect-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 14px 24px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.reconnect-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+.dashboard-btn {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  padding: 14px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dashboard-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .disconnect-modal {
+    padding: 30px 20px;
+  }
+
+  .disconnect-modal h2 {
+    font-size: 24px;
+  }
+
+  .disconnect-modal p {
+    font-size: 14px;
+  }
+
+  .reconnect-btn,
+  .dashboard-btn {
+    padding: 12px 20px;
+    font-size: 15px;
+  }
+}
+
+/* Buttons */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -302,10 +421,6 @@ img {
   transform: none !important;
 }
 
-/* ============================================
-   INPUT FIELDS
-   ============================================ */
-
 .input-group {
   margin-bottom: var(--spacing-lg);
   width: 100%;
@@ -356,10 +471,6 @@ img {
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
-/* ============================================
-   PROGRESS BAR
-   ============================================ */
-
 .progress-container {
   width: 100%;
   height: 8px;
@@ -375,10 +486,6 @@ img {
   transition: width var(--transition-base);
   max-width: 100%;
 }
-
-/* ============================================
-   BADGE
-   ============================================ */
 
 .badge {
   display: inline-flex;
@@ -406,10 +513,6 @@ img {
   color: var(--white);
 }
 
-/* ============================================
-   TIMER DISPLAY
-   ============================================ */
-
 .timer-display {
   display: inline-flex;
   align-items: center;
@@ -428,13 +531,14 @@ img {
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
 }
-
-/* ============================================
-   AVATAR
-   ============================================ */
 
 .avatar {
   width: 48px;
@@ -466,10 +570,6 @@ img {
   font-size: 48px;
 }
 
-/* ============================================
-   QUESTION PROGRESS
-   ============================================ */
-
 .question-progress {
   background: var(--primary-gradient);
   color: var(--white);
@@ -481,10 +581,6 @@ img {
   margin-bottom: var(--spacing-md);
   box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
 }
-
-/* ============================================
-   LOADING SPINNER
-   ============================================ */
 
 .spinner {
   width: 40px;
@@ -504,7 +600,6 @@ img {
   z-index: 1000;
 }
 
-/* Blockchain Badge */
 .blockchain-badge {
   background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   color: white;
@@ -518,7 +613,6 @@ img {
   gap: 6px;
 }
 
-/* Blockchain Pending State */
 .blockchain-pending {
   text-align: center;
   padding: var(--spacing-2xl);
@@ -540,31 +634,27 @@ img {
   color: var(--gray-600);
 }
 
-
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
-
-/* ============================================
-   RESPONSIVE UTILITIES
-   ============================================ */
 
 @media (max-width: 640px) {
   .card {
     padding: var(--spacing-lg);
     border-radius: var(--radius-lg);
   }
-  
+
   .screen-wrapper {
     padding: var(--spacing-md);
   }
-  
+
   .btn {
     width: 100%;
   }
 }
 
-/* Hide on mobile */
 .hide-mobile {
   display: none;
 }
@@ -575,7 +665,6 @@ img {
   }
 }
 
-/* Show only on mobile */
 .show-mobile {
   display: block;
 }

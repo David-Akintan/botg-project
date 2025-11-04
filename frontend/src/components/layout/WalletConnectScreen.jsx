@@ -1,7 +1,7 @@
-import React from 'react';
-import { useWeb3 } from '../../blockchain/hooks/useWeb3';
-import '../../styles/components/layout/WalletConnectScreen.css';
-import { Wallet, Shield, Zap } from 'lucide-react';
+import React from "react";
+import { useWeb3 } from "../../blockchain/hooks/useWeb3";
+import "../../styles/components/layout/WalletConnectScreen.css";
+import { Wallet, Shield, Zap } from "lucide-react";
 
 export default function WalletConnectScreen({ onConnected }) {
   const { account, isConnecting, isConnected, connectWallet } = useWeb3();
@@ -30,7 +30,8 @@ export default function WalletConnectScreen({ onConnected }) {
 
             <h1>Connect Your Wallet</h1>
             <p className="wallet-subtitle">
-              Connect your wallet to play Consensus Clash and earn on-chain rewards
+              Connect your wallet to play Battle of the Giants and earn on-chain
+              rewards
             </p>
 
             <div className="wallet-features">
@@ -51,8 +52,8 @@ export default function WalletConnectScreen({ onConnected }) {
               </div>
             </div>
 
-            <button 
-              className="connect-wallet-btn" 
+            <button
+              className="connect-wallet-btn"
               onClick={handleConnect}
               disabled={isConnecting}
             >
@@ -62,17 +63,15 @@ export default function WalletConnectScreen({ onConnected }) {
                   Connecting...
                 </>
               ) : (
-                <>
-                  🦊 Connect Wallet
-                </>
+                <>🦊 Connect Wallet</>
               )}
             </button>
 
             <div className="wallet-help">
               <p>Don't have Wallet?</p>
-              <a 
-                href="https://metamask.io/download/" 
-                target="_blank" 
+              <a
+                href="https://metamask.io/download/"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="install-link"
               >

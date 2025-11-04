@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
-import { ethers } from 'ethers';
-import toast from 'react-hot-toast';
-import { DEFAULT_CHAIN } from '../config/chains';
+import { useState, useEffect } from "react";
+import { ethers } from "ethers";
+import toast from "react-hot-toast";
+import { DEFAULT_CHAIN } from "../config/chains";
 
 export const useWeb3 = () => {
   const [provider, setProvider] = useState(null);
@@ -10,12 +10,12 @@ export const useWeb3 = () => {
   const [chainId, setChainId] = useState(null);
   const [isConnecting, setIsConnecting] = useState(false);
   const [error, setError] = useState(null);
+  const [hasShownToast, setHasShownToast] = useState(false);
 
-
-  const connectWallet = async () => {
+  const connectWallet = async (isAutoConnect = false) => {
     if (!window.ethereum) {
-      setError('MetaMask not installed!');
-      toast.error('Please install MetaMask to play this game!');
+      setError("Wallet not installed!");
+      toast.error("Please install MetaMask to play this game!");
       return;
     }
 
@@ -25,7 +25,7 @@ export const useWeb3 = () => {
 
       // Request account access
       const accounts = await window.ethereum.request({
-        method: 'eth_requestAccounts'
+        method: "eth_requestAccounts",
       });
 
       // Create provider and signer
@@ -41,16 +41,25 @@ export const useWeb3 = () => {
       setAccount(accounts[0]);
       setChainId(network.name.toUpperCase());
 
-      if (currentChainId.toLowerCase() !== DEFAULT_CHAIN.chainId.toLowerCase()) {
-        toast.error('You are not connected to the Sepolia test network.');
+      if (
+        currentChainId.toLowerCase() !== DEFAULT_CHAIN.chainId.toLowerCase()
+      ) {
+        if (!isAutoConnect) {
+          // Only show toast if manual connect
+          toast.error("You are not connected to the Sepolia test network.");
+        }
+
         await switchNetwork(DEFAULT_CHAIN);
         return;
       }
-      
-      toast.success('✅ Connected to Sepolia network');
-      console.log('✅ Wallet connected:', accounts[0]);
+
+      if (!hasShownToast || !isAutoConnect) {
+        toast.success("✅ Connected to Sepolia network");
+        setHasShownToast(true);
+      }
+      console.log("✅ Wallet connected:", accounts[0]);
     } catch (err) {
-      console.error('❌ Wallet connection error:', err);
+      console.error("❌ Wallet connection error:", err);
       setError(err.message);
     } finally {
       setIsConnecting(false);
@@ -62,7 +71,7 @@ export const useWeb3 = () => {
     setSigner(null);
     setAccount(null);
     setChainId(null);
-    console.log('🔌 Wallet disconnected');
+    console.log("🔌 Wallet disconnected");
   };
 
   const switchNetwork = async (targetChainId) => {
@@ -70,30 +79,30 @@ export const useWeb3 = () => {
 
     try {
       await window.ethereum.request({
-        method: 'wallet_switchEthereumChain',
+        method: "wallet_switchEthereumChain",
         params: [{ chainId: targetChainId }],
       });
     } catch (switchError) {
       // Chain doesn't exist, add it
       if (switchError.code === 4902) {
         const chain = Object.values(SUPPORTED_CHAINS).find(
-          c => c.chainId === targetChainId
+          (c) => c.chainId === targetChainId
         );
-        
+
         if (chain) {
           try {
             await window.ethereum.request({
-              method: 'wallet_addEthereumChain',
+              method: "wallet_addEthereumChain",
               params: [chain],
             });
           } catch (addError) {
-            console.error('Failed to add network:', addError);
-            toast.error('Failed to add Sepolia network.');
+            console.error("Failed to add network:", addError);
+            toast.error("Failed to add Sepolia network.");
           }
         }
       } else {
-        console.error('Failed to switch network:', switchError);
-        toast.error('Failed to switch network.');
+        console.error("Failed to switch network:", switchError);
+        toast.error("Failed to switch network.");
       }
     }
   };
@@ -105,7 +114,7 @@ export const useWeb3 = () => {
     const handleAccountsChanged = (accounts) => {
       if (accounts.length === 0) {
         disconnectWallet();
-        toast.error('Wallet disconnected! Please reconnect.');
+        toast.error("Wallet disconnected! Please reconnect.");
       } else {
         setAccount(accounts[0]);
       }
@@ -114,18 +123,21 @@ export const useWeb3 = () => {
     const handleChainChanged = (newChainId) => {
       setChainId(newChainId);
       if (newChainId !== DEFAULT_CHAIN.chainId) {
-        alert('Please switch your network to Sepolia Testnet.');
+        alert("Please switch your network to Sepolia Testnet.");
       }
       window.location.reload(); // Recommended by MetaMask
     };
 
-    window.ethereum.on('accountsChanged', handleAccountsChanged);
-    window.ethereum.on('chainChanged', handleChainChanged);
+    window.ethereum.on("accountsChanged", handleAccountsChanged);
+    window.ethereum.on("chainChanged", handleChainChanged);
 
     return () => {
       if (window.ethereum.removeListener) {
-        window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
-        window.ethereum.removeListener('chainChanged', handleChainChanged);
+        window.ethereum.removeListener(
+          "accountsChanged",
+          handleAccountsChanged
+        );
+        window.ethereum.removeListener("chainChanged", handleChainChanged);
       }
     };
   }, []);
@@ -137,14 +149,14 @@ export const useWeb3 = () => {
 
       try {
         const accounts = await window.ethereum.request({
-          method: 'eth_accounts'
+          method: "eth_accounts",
         });
 
         if (accounts.length > 0) {
-          await connectWallet();
+          await connectWallet(true);
         }
       } catch (err) {
-        console.error('Auto-connect failed:', err);
+        console.error("Auto-connect failed:", err);
       }
     };
 
@@ -161,6 +173,6 @@ export const useWeb3 = () => {
     isConnected: !!account,
     connectWallet,
     disconnectWallet,
-    switchNetwork
+    switchNetwork,
   };
-};  
+};

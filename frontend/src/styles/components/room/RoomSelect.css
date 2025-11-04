@@ -326,6 +326,7 @@
     margin-bottom: var(--spacing-lg);
     width: 100%;
     justify-content: center;
+    display: none;
   }
 
   .rejoin-banner {

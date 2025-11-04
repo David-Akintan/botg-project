@@ -3,8 +3,6 @@ pragma solidity ^0.8.20;
 
 /**
  * @title ConsensusClash
- * @notice A debate game converted from GenLayer to Solidity
- * @dev Note: LLM functionality replaced with oracle/manual scoring mechanism
  */
 contract ConsensusClash {
     // Game configuration

@@ -5,13 +5,13 @@ import { useWeb3 } from "../../blockchain/hooks/useWeb3";
 import { useContract } from "../../blockchain/hooks/useContract";
 
 // Blockchain Players Panel Component
-function BlockchainPlayersPanel({ 
-  contract, 
-  currentRoom, 
-  roomCreatedOnChain, 
+function BlockchainPlayersPanel({
+  contract,
+  currentRoom,
+  roomCreatedOnChain,
   blockchainPlayers,
   playersInRoom,
-  fetchingPlayers 
+  fetchingPlayers,
 }) {
   if (!contract || !roomCreatedOnChain) {
     return null;
@@ -20,16 +20,21 @@ function BlockchainPlayersPanel({
   // Match blockchain addresses with socket players
   const getPlayerName = (address) => {
     const player = playersInRoom.find(
-      p => p.walletAddress && p.walletAddress.toLowerCase() === address.toLowerCase()
+      (p) =>
+        p.walletAddress &&
+        p.walletAddress.toLowerCase() === address.toLowerCase()
     );
-    return player ? player.name : `${address.slice(0, 6)}...${address.slice(-4)}`;
+    return player
+      ? player.name
+      : `${address.slice(0, 6)}...${address.slice(-4)}`;
   };
 
-  const socketPlayersWithWallets = playersInRoom.filter(p => p.walletAddress);
+  const socketPlayersWithWallets = playersInRoom.filter((p) => p.walletAddress);
   const blockchainPlayerCount = blockchainPlayers.length;
   const totalPlayersWithWallets = socketPlayersWithWallets.length;
-    const allPlayersJoined = totalPlayersWithWallets > 0 && 
-                          blockchainPlayerCount === totalPlayersWithWallets;
+  const allPlayersJoined =
+    totalPlayersWithWallets > 0 &&
+    blockchainPlayerCount === totalPlayersWithWallets;
 
   return (
     <div className="blockchain-players-panel">
@@ -58,7 +63,8 @@ function BlockchainPlayersPanel({
 
       {blockchainPlayerCount < totalPlayersWithWallets && (
         <div className="warning-message">
-          ⚠️ {totalPlayersWithWallets - blockchainPlayerCount} player(s) haven't joined blockchain yet
+          ⚠️ {totalPlayersWithWallets - blockchainPlayerCount} player(s) haven't
+          joined blockchain yet
         </div>
       )}
 
@@ -86,9 +92,13 @@ function BlockchainPlayersPanel({
           <h5>Waiting for:</h5>
           <ul>
             {socketPlayersWithWallets
-              .filter(p => !blockchainPlayers.some(
-                addr => addr.toLowerCase() === p.walletAddress.toLowerCase()
-              ))
+              .filter(
+                (p) =>
+                  !blockchainPlayers.some(
+                    (addr) =>
+                      addr.toLowerCase() === p.walletAddress.toLowerCase()
+                  )
+              )
               .map((player, index) => (
                 <li key={index} className="pending-player-item">
                   <span className="player-pending">⏳</span>
@@ -131,7 +141,7 @@ export default function Dashboard({
   const { signer, account, isConnected } = useWeb3();
   const { contract, isReady } = useContract(signer);
 
-   useEffect(() => {
+  useEffect(() => {
     if (contract) {
       contract
         .weeklyTopic()
@@ -149,14 +159,16 @@ export default function Dashboard({
     socket.on("playerJoined", (updatedRoom) => {
       if (currentRoom && updatedRoom.id === currentRoom.id) {
         console.log("📥 Room update received:", updatedRoom);
-        
+
         setCurrentRoom(updatedRoom);
         setPlayersInRoom(updatedRoom.players);
-        
+
         // VERIFY host status matches server
         const serverSaysImHost = updatedRoom.hostId === socket.id;
         if (isHost !== serverSaysImHost) {
-          console.log(`⚠️ Host status corrected: ${isHost} -> ${serverSaysImHost}`);
+          console.log(
+            `⚠️ Host status corrected: ${isHost} -> ${serverSaysImHost}`
+          );
           setIsHost(serverSaysImHost);
         }
       }
@@ -229,20 +241,28 @@ export default function Dashboard({
     // Verify immediately on mount
     socket.emit("verifyHostStatus", { roomCode: currentRoom.id });
 
-    // Verify every 5 seconds
+    // Verify every 10 seconds
     const verifyInterval = setInterval(() => {
       socket.emit("verifyHostStatus", { roomCode: currentRoom.id });
-    }, 5000);
+    }, 10000);
 
     // Handle verification response
-    const handleHostStatusVerified = ({ isHost: serverIsHost, hostId, originalHostId }) => {
-      console.log(`🔍 Server says: isHost=${serverIsHost}, hostId=${hostId}, myId=${socket.id}`);
-      
+    const handleHostStatusVerified = ({
+      isHost: serverIsHost,
+      hostId,
+      originalHostId,
+    }) => {
+      console.log(
+        `🔍 Server says: isHost=${serverIsHost}, hostId=${hostId}, myId=${socket.id}`
+      );
+
       // Update local state if it doesn't match server
       if (isHost !== serverIsHost) {
-        console.log(`⚠️ Host status mismatch! Correcting: ${isHost} -> ${serverIsHost}`);
+        console.log(
+          `⚠️ Host status mismatch! Correcting: ${isHost} -> ${serverIsHost}`
+        );
         setIsHost(serverIsHost);
-        
+
         if (serverIsHost) {
           alert("👑 You are now the host!");
         }
@@ -250,10 +270,10 @@ export default function Dashboard({
 
       // Update room info with correct host
       if (currentRoom && currentRoom.hostId !== hostId) {
-        setCurrentRoom(prev => ({
+        setCurrentRoom((prev) => ({
           ...prev,
           hostId: hostId,
-          originalHostId: originalHostId
+          originalHostId: originalHostId,
         }));
       }
     };
@@ -270,10 +290,10 @@ export default function Dashboard({
   useEffect(() => {
     if (!socket || !currentRoom || !isHost) return;
 
-    // Send heartbeat every 3 seconds
+    // Send heartbeat every 7 seconds
     const heartbeatInterval = setInterval(() => {
       socket.emit("hostHeartbeat", { roomCode: currentRoom.id });
-    }, 3000);
+    }, 7000);
 
     return () => clearInterval(heartbeatInterval);
   }, [socket, currentRoom, isHost]);
@@ -282,9 +302,16 @@ export default function Dashboard({
   useEffect(() => {
     if (!socket) return;
 
-    const handleHostTransferred = ({ newHostId, originalHostLeft, message }) => {
-      console.log("👑 Host transfer event received:", { newHostId, myId: socket.id });
-      
+    const handleHostTransferred = ({
+      newHostId,
+      originalHostLeft,
+      message,
+    }) => {
+      console.log("👑 Host transfer event received:", {
+        newHostId,
+        myId: socket.id,
+      });
+
       if (newHostId === socket.id) {
         console.log("✅ I am now the host!");
         setIsHost(true);
@@ -296,9 +323,9 @@ export default function Dashboard({
 
       // Update room info
       if (currentRoom) {
-        setCurrentRoom(prev => ({
+        setCurrentRoom((prev) => ({
           ...prev,
-          hostId: newHostId
+          hostId: newHostId,
         }));
       }
     };
@@ -390,12 +417,7 @@ export default function Dashboard({
 
         // Show prompt
         if (contract && account) {
-          const join = window.confirm(
-            "⛓️ The blockchain room has been created!\n\nWould you like to join the blockchain room now?"
-          );
-          if (join) {
-            handleJoinBlockchainRoom();
-          }
+          toast.info("⛓️ Blockchain room is ready! Join now...");
         }
       }
     };
@@ -906,8 +928,8 @@ export default function Dashboard({
                         <span className="player-name">{player.name}</span>
 
                         {player.id === socket.id && (
-            <span className="you-tag">YOU</span>
-          )}
+                          <span className="you-tag">YOU</span>
+                        )}
                         {player.id === currentRoom.hostId && (
                           <span className="host-tag">👑 Host</span>
                         )}
@@ -947,13 +969,13 @@ export default function Dashboard({
                 )}
 
                 <BlockchainPlayersPanel
-      contract={contract}
-      currentRoom={currentRoom}
-      roomCreatedOnChain={roomCreatedOnChain}
-      blockchainPlayers={blockchainPlayers}
-      playersInRoom={playersInRoom}
-      fetchingPlayers={fetchingPlayers}
-    />
+                  contract={contract}
+                  currentRoom={currentRoom}
+                  roomCreatedOnChain={roomCreatedOnChain}
+                  blockchainPlayers={blockchainPlayers}
+                  playersInRoom={playersInRoom}
+                  fetchingPlayers={fetchingPlayers}
+                />
 
                 <div className="control-buttons">
                   {/* Single Blockchain Setup Button */}
@@ -1024,13 +1046,13 @@ export default function Dashboard({
                 <p>⏳ Waiting for the host to start the game...</p>
 
                 <BlockchainPlayersPanel
-      contract={contract}
-      currentRoom={currentRoom}
-      roomCreatedOnChain={roomCreatedOnChain}
-      blockchainPlayers={blockchainPlayers}
-      playersInRoom={playersInRoom}
-      fetchingPlayers={fetchingPlayers}
-    />
+                  contract={contract}
+                  currentRoom={currentRoom}
+                  roomCreatedOnChain={roomCreatedOnChain}
+                  blockchainPlayers={blockchainPlayers}
+                  playersInRoom={playersInRoom}
+                  fetchingPlayers={fetchingPlayers}
+                />
 
                 {contract && account && (
                   <div className="player-blockchain-panel">
