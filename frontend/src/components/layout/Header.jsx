@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
+import { useState } from "react";
 import WalletConnect from "../blockchain/WalletConnect";
-import { Menu, X } from "lucide-react";
 import "../../styles/components/layout/Header.css";
+import { LucideMenu } from "lucide-react";
+import { XIcon } from "lucide-react";
 
-export default function Header({ showWallet = true, onLogoClick }) {
+export default function Header({
+  showWallet = true,
+  onDisconnect,
+  onLogoClick,
+}) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const toggleMobileMenu = () => {
@@ -33,7 +39,6 @@ export default function Header({ showWallet = true, onLogoClick }) {
         <div className="header-left">
           <div
             className="logo-section"
-            onClick={onLogoClick}
             style={{ cursor: onLogoClick ? "pointer" : "default" }}
           >
             <div className="logo-icon">⚔️</div>
@@ -47,7 +52,7 @@ export default function Header({ showWallet = true, onLogoClick }) {
         {showWallet && (
           <>
             <div className="header-right desktop-only">
-              <WalletConnect />
+              <WalletConnect onDisconnect={onDisconnect} />
             </div>
 
             <button
@@ -55,7 +60,11 @@ export default function Header({ showWallet = true, onLogoClick }) {
               onClick={toggleMobileMenu}
               aria-label="Toggle menu"
             >
-              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {mobileMenuOpen ? (
+                <XIcon size={24} />
+              ) : (
+                <LucideMenu size={24} style={{ color: "white" }} />
+              )}
             </button>
 
             {mobileMenuOpen && (
@@ -65,18 +74,19 @@ export default function Header({ showWallet = true, onLogoClick }) {
                   onClick={(e) => e.stopPropagation()}
                 >
                   <div className="mobile-menu-header">
-                    <h3>Menu</h3>
+                    <h3></h3>
                     <button
                       className="close-btn"
                       onClick={closeMobileMenu}
                       aria-label="Close menu"
+                      style={{ color: "white" }}
                     >
-                      <X size={20} />
+                      X
                     </button>
                   </div>
 
                   <div className="mobile-wallet-section">
-                    <WalletConnect />
+                    <WalletConnect onDisconnect={onDisconnect} />
                   </div>
                 </div>
               </div>

@@ -185,7 +185,6 @@
   justify-content: center;
   width: 36px;
   height: 36px;
-  background: transparent;
   border: none;
   color: var(--gray-600);
   cursor: pointer;
@@ -275,6 +274,7 @@
   .mobile-menu-content {
     width: 100%;
     max-width: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   }
 }
 
