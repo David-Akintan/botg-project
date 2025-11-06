@@ -1,9 +1,9 @@
 export const MOCK_TOPICS = [
-  "Is a hot dog a sandwich?",
-  "Should AI have rights?",
-  "Is cereal a soup?",
-  "Are programmers artists or engineers?",
-  "Is Die Hard a Christmas movie?"
+  "What is a blockchain?",
+  "What is a custodian wallet?",
+  "How do you differentiate a token and a coin?",
+  "Explain the concept of Liquidity Pools",
+  "Describe the role of Market Makers",
 ];
 
 export const MOCK_PLAYERS = [
@@ -11,5 +11,5 @@ export const MOCK_PLAYERS = [
   { id: 2, name: "BlockchainBob", avatar: "👨‍💻" },
   { id: 3, name: "DeFiQueen", avatar: "👑" },
   { id: 4, name: "ConsensusKing", avatar: "🤴" },
-  { id: 5, name: "SmartContractSam", avatar: "🧙‍♂️" }
+  { id: 5, name: "SmartContractSam", avatar: "🧙‍♂️" },
 ];

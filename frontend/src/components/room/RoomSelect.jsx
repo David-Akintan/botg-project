@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "../../styles/components/room/RoomSelect.css";
 
-export default function RoomSelect({ 
-  onJoinRoom, 
-  simulateMode, 
-  setSimulateMode, 
-  rooms, 
+export default function RoomSelect({
+  onJoinRoom,
+  simulateMode,
+  setSimulateMode,
+  rooms,
   socket,
   hostRoomInfo,
-  onHostRejoin 
+  onHostRejoin,
 }) {
   const [roomCode, setRoomCode] = useState("");
   const [mode, setMode] = useState("join");
@@ -30,7 +30,10 @@ export default function RoomSelect({
   };
 
   const handleCreateRoom = () => {
-    const generatedCode = Math.random().toString(36).substring(2, 8).toUpperCase();
+    const generatedCode = Math.random()
+      .toString(36)
+      .substring(2, 8)
+      .toUpperCase();
     const info = { roomCode: generatedCode, mode: "create" };
     console.log("Creating room:", info);
     socket.emit("joinRoom", info);
@@ -48,16 +51,16 @@ export default function RoomSelect({
     onHostRejoin(hostRoomInfo.roomCode);
   };
 
-  const hostRoomExists = hostRoomInfo && localRooms.some(
-    (room) => room.id === hostRoomInfo.roomCode
-  );
+  const hostRoomExists =
+    hostRoomInfo &&
+    localRooms.some((room) => room.id === hostRoomInfo.roomCode);
 
   return (
     <div className="room-select-container">
       {/* Back Button */}
-      <button className="back-to-welcome-btn" onClick={() => window.location.reload()}>
+      {/* <button className="back-to-welcome-btn" onClick={() => window.location.reload()}>
         ← Back to Welcome
-      </button>
+      </button> */}
 
       <div className="room-select-content">
         <h2>🎮 Join or Create Room</h2>
@@ -69,7 +72,9 @@ export default function RoomSelect({
               <span className="rejoin-icon">👑</span>
               <div className="rejoin-content">
                 <h3>You are the host of a room!</h3>
-                <p>Room Code: <strong>{hostRoomInfo.roomCode}</strong></p>
+                <p>
+                  Room Code: <strong>{hostRoomInfo.roomCode}</strong>
+                </p>
               </div>
               <button className="rejoin-btn" onClick={handleHostRejoin}>
                 🔄 Rejoin Your Room
@@ -80,7 +85,9 @@ export default function RoomSelect({
 
         {hostRoomInfo && !hostRoomExists && (
           <div className="room-expired-notice">
-            <p>⚠️ Your previous room ({hostRoomInfo.roomCode}) no longer exists.</p>
+            <p>
+              ⚠️ Your previous room ({hostRoomInfo.roomCode}) no longer exists.
+            </p>
           </div>
         )}
 
@@ -142,7 +149,9 @@ export default function RoomSelect({
         <div className="available-rooms">
           <h3>Available Rooms</h3>
           {localRooms.length === 0 ? (
-            <p style={{ textAlign: 'center', color: 'var(--gray-500)' }}>No available rooms.</p>
+            <p style={{ textAlign: "center", color: "var(--gray-500)" }}>
+              No available rooms.
+            </p>
           ) : (
             <ul>
               {localRooms.map((room) => (
@@ -156,7 +165,7 @@ export default function RoomSelect({
                   <span className="room-players">
                     {room.playerCount || 0}/{room.maxPlayers || 4} players
                   </span>
-                  <button 
+                  <button
                     onClick={() => handleJoinFromList(room.id)}
                     disabled={room.playerCount >= room.maxPlayers}
                   >

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import toast from "react-hot-toast";
 import { DEFAULT_CHAIN } from "../config/chains";
+import { Toaster } from "react-hot-toast";
 
 export const useWeb3 = () => {
   const [provider, setProvider] = useState(null);
@@ -11,6 +12,39 @@ export const useWeb3 = () => {
   const [isConnecting, setIsConnecting] = useState(false);
   const [error, setError] = useState(null);
   const [hasShownToast, setHasShownToast] = useState(false);
+
+  const switchNetwork = async (targetChainId) => {
+    if (!window.ethereum) return;
+
+    try {
+      await window.ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: targetChainId }],
+      });
+    } catch (switchError) {
+      // Chain doesn't exist, add it
+      if (switchError.code === 4902) {
+        const chain = Object.values(SUPPORTED_CHAINS).find(
+          (c) => c.chainId === targetChainId
+        );
+
+        if (chain) {
+          try {
+            await window.ethereum.request({
+              method: "wallet_addEthereumChain",
+              params: [chain],
+            });
+          } catch (addError) {
+            console.error("Failed to add network:", addError);
+            toast.error("Failed to add Sepolia network.");
+          }
+        }
+      } else {
+        console.error("Failed to switch network:", switchError);
+        toast.error("Failed to switch network.");
+      }
+    }
+  };
 
   const connectWallet = async (isAutoConnect = false) => {
     if (!window.ethereum) {
@@ -49,7 +83,7 @@ export const useWeb3 = () => {
           toast.error("You are not connected to the Sepolia test network.");
         }
 
-        await switchNetwork(DEFAULT_CHAIN);
+        await switchNetwork(DEFAULT_CHAIN.chainId);
         return;
       }
 
@@ -74,39 +108,6 @@ export const useWeb3 = () => {
     console.log("🔌 Wallet disconnected");
   };
 
-  const switchNetwork = async (targetChainId) => {
-    if (!window.ethereum) return;
-
-    try {
-      await window.ethereum.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId: targetChainId }],
-      });
-    } catch (switchError) {
-      // Chain doesn't exist, add it
-      if (switchError.code === 4902) {
-        const chain = Object.values(SUPPORTED_CHAINS).find(
-          (c) => c.chainId === targetChainId
-        );
-
-        if (chain) {
-          try {
-            await window.ethereum.request({
-              method: "wallet_addEthereumChain",
-              params: [chain],
-            });
-          } catch (addError) {
-            console.error("Failed to add network:", addError);
-            toast.error("Failed to add Sepolia network.");
-          }
-        }
-      } else {
-        console.error("Failed to switch network:", switchError);
-        toast.error("Failed to switch network.");
-      }
-    }
-  };
-
   // Listen for account changes
   useEffect(() => {
     if (!window.ethereum) return;
@@ -120,12 +121,16 @@ export const useWeb3 = () => {
       }
     };
 
-    const handleChainChanged = (newChainId) => {
+    const handleChainChanged = async (newChainId) => {
       setChainId(newChainId);
       if (newChainId !== DEFAULT_CHAIN.chainId) {
-        alert("Please switch your network to Sepolia Testnet.");
+        // alert("Please switch your network to Sepolia Testnet.");
+        await window.ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: DEFAULT_CHAIN.chainId }],
+        });
       }
-      window.location.reload(); // Recommended by MetaMask
+      // window.location.reload(); // Recommended by MetaMask
     };
 
     window.ethereum.on("accountsChanged", handleAccountsChanged);

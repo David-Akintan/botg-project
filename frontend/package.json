@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@nomicfoundation/hardhat-verify": "^2.1.0",
     "ethers": "^6.15.0",
     "genlayer-js": "^0.18.2",
     "lucide-react": "^0.545.0",

@@ -598,10 +598,10 @@ img {
 }
 
 .app-header {
-  position: fixed;
+  /* position: fixed; */
   top: 0;
   right: 0;
-  padding: var(--spacing-lg);
+  padding: 3px;
   z-index: 1000;
 }
 

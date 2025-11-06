@@ -18,6 +18,10 @@ export default function WalletConnect({ onDisconnect }) {
     return `${address.slice(0, 6)}...${address.slice(-4)}`;
   };
 
+  const copyToClipboard = (text) => {
+    navigator.clipboard.writeText(text);
+  };
+
   const handleDisconnect = () => {
     disconnectWallet();
     if (onDisconnect) {
@@ -36,7 +40,12 @@ export default function WalletConnect({ onDisconnect }) {
             />
           </div>
           <div className="wallet-details">
-            <div className="wallet-address">{formatAddress(account)}</div>
+            <div
+              className="wallet-address"
+              onClick={() => copyToClipboard(account)}
+            >
+              {formatAddress(account)}
+            </div>
             <div className="wallet-chain">Chain: {chainId}</div>
           </div>
         </div>

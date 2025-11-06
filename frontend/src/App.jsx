@@ -533,7 +533,7 @@ export default function App() {
 
   return (
     <div className="app-root">
-      <Toaster
+      {/* <Toaster
         position="top-right"
         toastOptions={{
           duration: 4000,
@@ -546,7 +546,7 @@ export default function App() {
           success: { iconTheme: { primary: "#4ade80", secondary: "#fff" } },
           error: { iconTheme: { primary: "#ef4444", secondary: "#fff" } },
         }}
-      />
+      /> */}
 
       {stage !== GameStage.WELCOME && (
         <Header

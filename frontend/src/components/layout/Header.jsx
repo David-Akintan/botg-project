@@ -2,8 +2,7 @@ import React from "react";
 import { useState } from "react";
 import WalletConnect from "../blockchain/WalletConnect";
 import "../../styles/components/layout/Header.css";
-import { LucideMenu } from "lucide-react";
-import { XIcon } from "lucide-react";
+import { Menu, XIcon } from "lucide-react";
 
 export default function Header({
   showWallet = true,
@@ -39,7 +38,8 @@ export default function Header({
         <div className="header-left">
           <div
             className="logo-section"
-            style={{ cursor: onLogoClick ? "pointer" : "default" }}
+            onClick={() => window.location.reload()}
+            style={{ cursor: "pointer" }}
           >
             <div className="logo-icon">⚔️</div>
             <div className="logo-text">
@@ -63,7 +63,7 @@ export default function Header({
               {mobileMenuOpen ? (
                 <XIcon size={24} />
               ) : (
-                <LucideMenu size={24} style={{ color: "white" }} />
+                <Menu size={24} style={{ color: "white" }} />
               )}
             </button>
 

@@ -24,11 +24,10 @@ const io = new Server(server, {
 
 // --- Game Topics/Questions Pool ---
 const GAME_TOPICS = [
-  "Is a hot dog a sandwich?",
-  "Should AI have rights?",
-  "Is cereal a soup?",
-  "Are programmers artists or engineers?",
-  "Is Die Hard a Christmas movie?",
+  "What is a blockchain?",
+  "What is a custodian wallet?",
+  "How do you differentiate a token and a coin?",
+  "Explain the concept of Liquidity Pools",
 ];
 
 const TOTAL_QUESTIONS = 5;

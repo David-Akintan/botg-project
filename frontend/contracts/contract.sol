@@ -2,9 +2,9 @@
 pragma solidity ^0.8.20;
 
 /**
- * @title ConsensusClash
+ * @title Battle of the Giants
  */
-contract ConsensusClash {
+contract BattleOfTheGiants {
     // Game configuration
     uint8 public constant MIN_PLAYERS = 3;
     uint8 public constant MAX_PLAYERS = 10;
