@@ -8,8 +8,8 @@ export default function PlayerSetup({ onComplete, account }) {
   const [selectedAvatar, setSelectedAvatar] = useState(null);
   const avatars = ["🐱", "🦊", "🐸", "🐼", "🐵", "🐯"];
 
-   const { signer, account: walletAccount, isConnected } = useWeb3();
-  const { contract, isReady } = useContract(signer);
+  const { signer, chainId, account: walletAccount, isConnected } = useWeb3();
+  const { contract, contractAddress, isReady } = useContract(signer, chainId);
   const [isRegistering, setIsRegistering] = useState(false);
   const [registrationStatus, setRegistrationStatus] = useState("");
 
@@ -19,10 +19,10 @@ export default function PlayerSetup({ onComplete, account }) {
       return;
     }
 
-    const playerData = { 
-      name: playerName, 
-      avatar: selectedAvatar, 
-      walletAddress: walletAccount || account 
+    const playerData = {
+      name: playerName,
+      avatar: selectedAvatar,
+      walletAddress: walletAccount || account,
     };
 
     // Check if blockchain is available
@@ -40,11 +40,11 @@ export default function PlayerSetup({ onComplete, account }) {
       // Check if already registered
       console.log("🔍 Checking if player is registered...");
       const playerInfo = await contract.registeredPlayers(walletAccount);
-      
+
       if (playerInfo.registered) {
         console.log("✅ Player already registered on blockchain");
         setRegistrationStatus("Already registered!");
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         setIsRegistering(false);
         onComplete(playerData);
         return;
@@ -53,32 +53,31 @@ export default function PlayerSetup({ onComplete, account }) {
       // Register new player
       console.log("📝 Registering player on blockchain...");
       setRegistrationStatus("Registering on blockchain...");
-      
+
       const tx = await contract.registerPlayer(playerName, selectedAvatar);
-      
+
       setRegistrationStatus("Waiting for confirmation...");
       console.log("⏳ Transaction sent:", tx.hash);
-      
+
       const receipt = await tx.wait();
-      
+
       console.log(`✅ Player registered! Block: ${receipt.blockNumber}`);
       setRegistrationStatus("Registration complete!");
-      
+
       // Wait a moment to show success message
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+
       setIsRegistering(false);
       onComplete(playerData);
-
     } catch (err) {
       console.error("❌ Blockchain registration failed:", err);
       setIsRegistering(false);
-      
+
       const errorMessage = err.reason || err.message || "Unknown error";
       const proceed = window.confirm(
         `Blockchain registration failed: ${errorMessage}\n\nContinue without blockchain registration?`
       );
-      
+
       if (proceed) {
         onComplete(playerData);
       }
@@ -107,7 +106,9 @@ export default function PlayerSetup({ onComplete, account }) {
             {avatars.map((a) => (
               <div
                 key={a}
-                className={`avatar-item ${selectedAvatar === a ? "selected" : ""}`}
+                className={`avatar-item ${
+                  selectedAvatar === a ? "selected" : ""
+                }`}
                 onClick={() => setSelectedAvatar(a)}
               >
                 {a}
@@ -116,8 +117,8 @@ export default function PlayerSetup({ onComplete, account }) {
           </div>
         </div>
 
-        <button 
-          className="start-btn" 
+        <button
+          className="start-btn"
           onClick={handleStart}
           disabled={!playerName.trim() || !selectedAvatar || isRegistering}
         >

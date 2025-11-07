@@ -6,7 +6,7 @@
 export const CONTRACT_ADDRESSES = {
   localhost: "0x...", // Replace after deployment
   sepolia: "0x552936d5B337588b5e19637d3CBe70388EED4e79", // Replace with Sepolia deployment
-  mumbai: "0x...", // Replace with Mumbai deployment
+  base_sepolia: "0x...", // Replace with Mumbai deployment
 };
 
 /**
@@ -17,8 +17,9 @@ export const getContractAddress = (chainId) => {
     31337: CONTRACT_ADDRESSES.localhost,
     11155111: CONTRACT_ADDRESSES.sepolia,
     80001: CONTRACT_ADDRESSES.mumbai,
+    84532: CONTRACT_ADDRESSES.base_sepolia,
   };
-  
+
   return addresses[chainId] || CONTRACT_ADDRESSES.localhost;
 };
 
@@ -33,7 +34,7 @@ export const CONTRACT_ABI = [
   "function nextStage() external",
   "function submitAnswer(string memory answer) external",
   "function castVote(address votedFor) external",
-  
+
   "function getGameState() external view returns (uint256 roomId, uint256 gameId, uint8 stage, uint256 playerCount, uint256 stageStart)",
   "function getQuestions() external view returns (string[5] memory)",
   "function getPlayerInfo(address player) external view returns (tuple(string name, string avatar, uint256 totalXp, uint256 gamesPlayed, uint256 wins, bool registered))",
@@ -45,7 +46,7 @@ export const CONTRACT_ABI = [
   "function getFinalRankings() external view returns (tuple(address playerAddress, string name, string avatar, uint256 totalVotes, uint256 totalScore, uint256 xp, uint256 rank)[] memory)",
   "function getPlayerScore(address player) external view returns (tuple(uint256 totalVotes, uint256 totalScore, uint256 xp))",
   "function getGlobalLeaderboard(uint256 offset, uint256 limit) external view returns (tuple(string name, string avatar, uint256 totalXp, uint256 gamesPlayed, uint256 wins, bool registered)[] memory)",
-  
+
   "event PlayerRegistered(address indexed player, string name)",
   "event RoomCreated(uint256 indexed roomId, address indexed creator)",
   "event PlayerJoinedRoom(uint256 indexed roomId, address indexed player)",
@@ -53,7 +54,7 @@ export const CONTRACT_ABI = [
   "event StageChanged(uint256 indexed roomId, uint8 stage)",
   "event AnswerSubmitted(uint256 indexed roomId, address indexed player, uint8 questionIndex)",
   "event VoteCast(uint256 indexed roomId, uint8 questionIndex, address indexed voter, address indexed votedFor)",
-  "event GameCompleted(uint256 indexed roomId, address winner, uint256 xp)"
+  "event GameCompleted(uint256 indexed roomId, address winner, uint256 xp)",
 ];
 
 /**
@@ -67,7 +68,7 @@ export const GAME_CONSTANTS = {
   VOTE_TIME_SECONDS: 30,
   MIN_ANSWER_LENGTH: 20,
   MAX_ANSWER_LENGTH: 500,
-  STARTING_COUNTDOWN: 5
+  STARTING_COUNTDOWN: 5,
 };
 
 /**
@@ -87,7 +88,7 @@ export const CONTRACT_STAGES = {
   VOTING_Q4: 10,
   VOTING_Q5: 11,
   RESULTS: 12,
-  COMPLETED: 13
+  COMPLETED: 13,
 };
 
 /**
@@ -98,5 +99,5 @@ export const DEFAULT_QUESTIONS = [
   "Should AI have voting rights in the future?",
   "Is cereal a type of soup?",
   "Should we colonize Mars or fix Earth first?",
-  "Is water wet?"
+  "Is water wet?",
 ];

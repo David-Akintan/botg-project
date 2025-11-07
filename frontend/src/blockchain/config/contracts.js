@@ -1,16 +1,16 @@
 export const CONTRACT_ADDRESSES = {
   LOCALHOST: {
-    CONSENSUS_CLASH: '0x...' // Will be set after deployment
-  },
-  GENLAYER_TESTNET: {
-    CONSENSUS_CLASH: '0x...' // Will be set after deployment to GenLayer
+    BOTG: "0x...", // Will be set after deployment
   },
   SEPOLIA: {
-    CONSENSUS_CLASH: '0x552936d5B337588b5e19637d3CBe70388EED4e79' // Sepolia deployment
-  }
+    BOTG: "0x552936d5B337588b5e19637d3CBe70388EED4e79", // Sepolia deployment
+  },
+  BASE_SEPOLIA: {
+    BOTG: "0x552936d5B337588b5e19637d3CBe70388EED4e79", // Base_Sepolia deployment
+  },
 };
 
 export const getContractAddress = (chainId) => {
-  const chainName = chainId === '0xaa36a7' ? 'LOCALHOST' : 'GENLAYER_TESTNET';
-  return CONTRACT_ADDRESSES[chainName].CONSENSUS_CLASH;
+  const chainName = chainId === "0xaa36a7" ? "SEPOLIA" : "LOCALHOST";
+  return CONTRACT_ADDRESSES[chainName].BOTG;
 };

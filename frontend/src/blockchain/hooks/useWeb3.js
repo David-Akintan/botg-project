@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import toast from "react-hot-toast";
-import { DEFAULT_CHAIN } from "../config/chains";
-import { Toaster } from "react-hot-toast";
+import { SUPPORTED_CHAINS } from "../config/chains";
 
+const TARGET_NETWORK = "SEPOLIA";
 export const useWeb3 = () => {
   const [provider, setProvider] = useState(null);
   const [signer, setSigner] = useState(null);
@@ -12,6 +12,9 @@ export const useWeb3 = () => {
   const [isConnecting, setIsConnecting] = useState(false);
   const [error, setError] = useState(null);
   const [hasShownToast, setHasShownToast] = useState(false);
+
+  const targetChain = SUPPORTED_CHAINS[TARGET_NETWORK];
+  const targetChainIdHex = `0x${targetChain.chainId.toString(16)}`;
 
   const switchNetwork = async (targetChainId) => {
     if (!window.ethereum) return;
@@ -25,25 +28,43 @@ export const useWeb3 = () => {
       // Chain doesn't exist, add it
       if (switchError.code === 4902) {
         const chain = Object.values(SUPPORTED_CHAINS).find(
-          (c) => c.chainId === targetChainId
+          (c) => `0x${c.chainId.toString(16)}` === targetChainId
         );
 
         if (chain) {
           try {
             await window.ethereum.request({
               method: "wallet_addEthereumChain",
-              params: [chain],
+              params: [
+                {
+                  chainId: targetChainId,
+                  chainName: chain.chainName,
+                  nativeCurrency: chain.nativeCurrency,
+                  rpcUrls: chain.rpcUrls,
+                  blockExplorerUrls: chain.blockExplorerUrls,
+                },
+              ],
             });
+            return true;
           } catch (addError) {
-            console.error("Failed to add network:", addError);
-            toast.error("Failed to add Sepolia network.");
+            console.error("Failed to add network: ", addError);
+            toast.error(`Failed to add ${chain.chainName}.`);
+            return false;
           }
         }
       } else {
         console.error("Failed to switch network:", switchError);
         toast.error("Failed to switch network.");
+        return false;
       }
     }
+  };
+
+  const getChainName = (chainIdDecimal) => {
+    const chain = Object.values(SUPPORTED_CHAINS).find(
+      (c) => c.chainId === chainIdDecimal
+    );
+    return chain ? chain.chainName : `Chain ${chainIdDecimal}`;
   };
 
   const connectWallet = async (isAutoConnect = false) => {
@@ -66,35 +87,49 @@ export const useWeb3 = () => {
       const web3Provider = new ethers.BrowserProvider(window.ethereum);
       const web3Signer = await web3Provider.getSigner();
       const network = await web3Provider.getNetwork();
-      console.log(`Connected to network: ${network.chainId} (${network.name})`);
 
-      const currentChainId = `0x${network.chainId.toString(16)}`;
+      const currentChainIdDecimal = Number(network.chainId);
+      const currentChainIndex = `0x${currentChainIdDecimal.toString(16)}`;
+      const currentChainName = getChainName(currentChainIdDecimal);
+
+      console.log(
+        `Connected to network: ${currentChainIdDecimal} (${currentChainName})`
+      );
 
       setProvider(web3Provider);
       setSigner(web3Signer);
       setAccount(accounts[0]);
-      setChainId(network.name.toUpperCase());
+      setChainId(currentChainName);
 
-      if (
-        currentChainId.toLowerCase() !== DEFAULT_CHAIN.chainId.toLowerCase()
-      ) {
+      if (currentChainIdDecimal !== targetChain.chainId) {
         if (!isAutoConnect) {
-          // Only show toast if manual connect
-          toast.error("You are not connected to the Sepolia test network.");
+          toast.error(
+            `⚠️ You are connected to ${currentChainName}. Please switch to ${targetChain.chainName}.`,
+            { duration: 5000 }
+          );
         }
 
-        await switchNetwork(DEFAULT_CHAIN.chainId);
+        const switched = await switchNetwork(targetChainIdHex);
+        if (!switched && !isAutoConnect) {
+          toast.error(
+            `Please manually switch to ${targetChain.chainName} in your wallet.`,
+            { duration: 5000 }
+          );
+        }
         return;
       }
 
       if (!hasShownToast || !isAutoConnect) {
-        toast.success("✅ Connected to Sepolia network");
+        toast.success(`✅ Connected to ${targetChain.chainName}`);
         setHasShownToast(true);
       }
       console.log("✅ Wallet connected:", accounts[0]);
     } catch (err) {
       console.error("❌ Wallet connection error:", err);
       setError(err.message);
+      if (!isAutoConnect) {
+        toast.error("Failed to connect wallet. Please try again.");
+      }
     } finally {
       setIsConnecting(false);
     }
@@ -105,6 +140,8 @@ export const useWeb3 = () => {
     setSigner(null);
     setAccount(null);
     setChainId(null);
+    setHasShownToast(false);
+    toast.success("🔌 Wallet disconnected");
     console.log("🔌 Wallet disconnected");
   };
 
@@ -118,19 +155,32 @@ export const useWeb3 = () => {
         toast.error("Wallet disconnected! Please reconnect.");
       } else {
         setAccount(accounts[0]);
+        toast.success("👤 Account changed.");
+        console.log("👤 Account changed to:", accounts[0]);
       }
     };
 
-    const handleChainChanged = async (newChainId) => {
-      setChainId(newChainId);
-      if (newChainId !== DEFAULT_CHAIN.chainId) {
-        // alert("Please switch your network to Sepolia Testnet.");
-        await window.ethereum.request({
-          method: "wallet_switchEthereumChain",
-          params: [{ chainId: DEFAULT_CHAIN.chainId }],
-        });
+    const handleChainChanged = async (newChainIdIndex) => {
+      const newChainIdDecimal = parseInt(newChainIdIndex, 16);
+      const newChainName = getChainName(newChainIdDecimal);
+
+      console.log(
+        `🌐 Chain changed to: ${newChainIdDecimal} (${newChainName})`
+      );
+      setChainId(newChainName);
+
+      if (newChainIdDecimal !== targetChain.chainId) {
+        toast.error(
+          `⚠️ Wrong network! Please switch to ${targetChain.chainName}.`,
+          { duration: 5000 }
+        );
+
+        await switchNetwork(targetChainIdHex);
+      } else {
+        toast.success(`✅ Switched to ${targetChain.chainName}`);
       }
-      // window.location.reload(); // Recommended by MetaMask
+
+      window.location.reload();
     };
 
     window.ethereum.on("accountsChanged", handleAccountsChanged);
@@ -179,5 +229,7 @@ export const useWeb3 = () => {
     connectWallet,
     disconnectWallet,
     switchNetwork,
+    targetNetwork: TARGET_NETWORK,
+    targetChain,
   };
 };
