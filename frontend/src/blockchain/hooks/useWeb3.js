@@ -89,7 +89,7 @@ export const useWeb3 = () => {
       const network = await web3Provider.getNetwork();
 
       const currentChainIdDecimal = Number(network.chainId);
-      const currentChainIndex = `0x${currentChainIdDecimal.toString(16)}`;
+      const currentChainIdHex = `0x${currentChainIdDecimal.toString(16)}`;
       const currentChainName = getChainName(currentChainIdDecimal);
 
       console.log(
@@ -119,6 +119,7 @@ export const useWeb3 = () => {
         return;
       }
 
+      // User is on the correct network
       if (!hasShownToast || !isAutoConnect) {
         toast.success(`✅ Connected to ${targetChain.chainName}`);
         setHasShownToast(true);
@@ -171,16 +172,22 @@ export const useWeb3 = () => {
 
       if (newChainIdDecimal !== targetChain.chainId) {
         toast.error(
-          `⚠️ Wrong network! Please switch to ${targetChain.chainName}.`,
+          `⚠️ You switched to ${newChainName}. Please switch back to ${targetChain.chainName}.`,
           { duration: 5000 }
         );
 
-        await switchNetwork(targetChainIdHex);
+        setTimeout(async () => {
+          const shouldSwitch = window.confirm(
+            `You are currently on ${newChainName}.\n\nThis app requires ${targetChain.chainName}.\n\nWould you like to switch now?`
+          );
+
+          if (!shouldSwitch) {
+            await switchNetwork(targetChainIdHex);
+          }
+        }, 1000);
       } else {
         toast.success(`✅ Switched to ${targetChain.chainName}`);
       }
-
-      window.location.reload();
     };
 
     window.ethereum.on("accountsChanged", handleAccountsChanged);
