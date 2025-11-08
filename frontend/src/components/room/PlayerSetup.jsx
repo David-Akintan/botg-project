@@ -84,6 +84,24 @@ export default function PlayerSetup({ onComplete, account }) {
     }
   };
 
+  // ADD: Check for Farcaster user
+  useEffect(() => {
+    const farcasterUser = localStorage.getItem("farcaster_user");
+    if (farcasterUser) {
+      try {
+        const user = JSON.parse(farcasterUser);
+        setPlayerName(user.displayName || user.username);
+
+        // Optional: If they have a Farcaster avatar, use a specific emoji
+        if (user.pfpUrl) {
+          setSelectedAvatar("🟣"); // Purple circle for Farcaster users
+        }
+      } catch (err) {
+        console.error("Failed to parse Farcaster user:", err);
+      }
+    }
+  }, []);
+
   return (
     <div className="player-setup-container">
       <div className="player-setup-content">

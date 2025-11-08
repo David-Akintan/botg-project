@@ -82,6 +82,17 @@ export default function App() {
     console.log("🏠 Room info:", roomInfo);
   }, [stage, roomInfo]);
 
+  // Check if user came from Farcaster frame
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const source = urlParams.get("source");
+
+    if (source === "farcaster") {
+      console.log("🟣 User came from Farcaster!");
+      // Track this for analytics
+    }
+  }, []);
+
   // Join blockchain room when player joins via Socket.IO
   useEffect(() => {
     const joinBlockchainRoom = async () => {
@@ -472,7 +483,23 @@ export default function App() {
   };
 
   // Handler for wallet connection
-  const handleWalletConnected = () => {
+  const handleWalletConnected = (authData) => {
+    console.log("Auth data:", authData);
+
+    if (authData.type === "farcaster") {
+      // Store Farcaster user for later use
+      localStorage.setItem(
+        "farcaster_user",
+        JSON.stringify(authData.farcasterUser)
+      );
+      console.log(
+        "🟣 Logged in with Farcaster:",
+        authData.farcasterUser.username
+      );
+    } else if (authData.type === "wallet") {
+      console.log("🦊 Logged in with wallet:", authData.account);
+    }
+
     setStage(GameStage.ROOM_SELECT);
   };
 

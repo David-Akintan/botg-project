@@ -1,10 +1,15 @@
 // src/components/Leaderboard.jsx
 import React from "react";
 import "../../styles/components/game/Leaderboard.css";
+import ShareToFarcaster from "../social/ShareToFarcaster";
 
 export default function Leaderboard({ finalScores, onPlayAgain }) {
   // Sort scores by XP in descending order
-  const sortedScores = [...finalScores].sort((a, b) => (b.xp || 0) - (a.xp || 0));
+  const sortedScores = [...finalScores].sort(
+    (a, b) => (b.xp || 0) - (a.xp || 0)
+  );
+  const currentPlayer = finalScores[0]; // Adjust to find actual current player
+  const rank = finalScores.findIndex((p) => p.id === currentPlayer?.id) + 1;
 
   return (
     <div className="leaderboard-root">
@@ -42,10 +47,25 @@ export default function Leaderboard({ finalScores, onPlayAgain }) {
         )}
 
         <div className="leaderboard-actions">
-          <button className="btn back-btn" onClick={() => onPlayAgain && onPlayAgain()}>
+          <button
+            className="btn back-btn"
+            onClick={() => onPlayAgain && onPlayAgain()}
+          >
             ← Back to Game Room
           </button>
         </div>
+      </div>
+
+      <div className="leaderboard-actions">
+        <ShareToFarcaster
+          score={currentPlayer?.xp || 0}
+          rank={rank}
+          totalPlayers={finalScores.length}
+        />
+
+        <button className="play-again-btn" onClick={onPlayAgain}>
+          🔄 Play Again
+        </button>
       </div>
     </div>
   );

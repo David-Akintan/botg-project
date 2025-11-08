@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useEffect } from "react";
 import "../../styles/components/layout/Welcome.css";
 import {
   MessageSquare,
@@ -9,8 +9,19 @@ import {
   Swords,
   SettingsIcon,
 } from "lucide-react";
+import { useFarcaster } from "../../blockchain/hooks/useFarcaster";
 
 export default function Welcome({ onGetStarted }) {
+  const { connectFarcaster, farcasterUser, isLoading } = useFarcaster();
+
+  useEffect(() => {
+    // If user came from Farcaster, auto-proceed
+    if (farcasterUser) {
+      localStorage.setItem("farcaster_user", JSON.stringify(farcasterUser));
+      onGetStarted();
+    }
+  }, [farcasterUser, onGetStarted]);
+
   return (
     <div className="welcome-screen">
       <div className="welcome-container">
@@ -124,6 +135,25 @@ export default function Welcome({ onGetStarted }) {
         <div className="welcome-footer">
           <p>🎯 Game Duration: ~8 minutes | 👥 Players: 2-4 | 💎 XP System</p>
         </div>
+
+        {/* Farcaster Auth Options
+        <div className="auth-options">
+          <button className="get-started-btn" onClick={onGetStarted}>
+            🦊 Connect with MetaMask
+          </button>
+
+          <div className="divider">
+            <span>OR</span>
+          </div>
+
+          <button
+            className="farcaster-btn"
+            onClick={connectFarcaster}
+            disabled={isLoading}
+          >
+            {isLoading ? "Connecting..." : "🟣 Sign in with Farcaster"}
+          </button>
+        </div> */}
       </div>
     </div>
   );

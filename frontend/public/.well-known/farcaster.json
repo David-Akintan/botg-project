@@ -1,0 +1,10 @@
+{
+  "version": "1",
+  "name": "Battle of the Giants",
+  "iconUrl": "https://yourdomain.com/icon.png",
+  "splashImageUrl": "https://yourdomain.com/splash.png",
+  "splashBackgroundColor": "#1a1a2e",
+  "homeUrl": "https://botg-project.vercel.app/",
+  "description": "The Ultimate Debate Arena Powered by Base",
+  "imageUrls": ["https://yourdomain.com/screenshot1.png"]
+}

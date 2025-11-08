@@ -161,7 +161,7 @@ export const useWeb3 = () => {
       }
     };
 
-    const handleChainChanged = async (newChainIdIndex) => {
+    const handleChainChanged = (newChainIdIndex) => {
       const newChainIdDecimal = parseInt(newChainIdIndex, 16);
       const newChainName = getChainName(newChainIdDecimal);
 
@@ -176,13 +176,15 @@ export const useWeb3 = () => {
           { duration: 5000 }
         );
 
-        setTimeout(async () => {
+        setTimeout(() => {
           const shouldSwitch = window.confirm(
             `You are currently on ${newChainName}.\n\nThis app requires ${targetChain.chainName}.\n\nWould you like to switch now?`
           );
 
           if (!shouldSwitch) {
-            await switchNetwork(targetChainIdHex);
+            switchNetwork(targetChainIdHex).catch((err) => {
+              console.error("Failed to switch network:", err);
+            });
           }
         }, 1000);
       } else {
