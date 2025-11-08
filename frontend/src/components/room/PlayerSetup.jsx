@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../styles/components/room/PlayerSetup.css";
 import { useWeb3 } from "../../blockchain/hooks/useWeb3";
 import { useContract } from "../../blockchain/hooks/useContract";
