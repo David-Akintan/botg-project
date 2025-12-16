@@ -281,6 +281,7 @@
 @media (max-height: 600px) and (max-width: 900px) {
   .mobile-menu-content {
     overflow-y: auto;
+    background: var(--primary-color);
   }
 }
 
